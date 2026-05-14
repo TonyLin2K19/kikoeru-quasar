@@ -15,7 +15,7 @@
         <q-input v-if="$route.name !== 'advance search'" dark dense rounded standout v-model="keyword" debounce="500" input-class="text-right" class="q-mr-sm">
           <template v-slot:before>
             <q-btn round dense flat icon="manage_search" to="/search">
-              <q-tooltip>点此进入聚合搜索，支持多关键字搜索</q-tooltip>
+              <q-tooltip>點此進入聚合搜尋，支援多關鍵字搜尋</q-tooltip>
             </q-btn>
           </template>
           <template v-slot:append>
@@ -76,7 +76,7 @@
 
             <q-item-section>
               <q-item-label class="text-subtitle1">
-                随心听
+                隨心聽
               </q-item-label>
             </q-item-section>
           </q-item>
@@ -94,7 +94,7 @@
 
             <q-item-section>
               <q-item-label class="text-subtitle1">
-                睡眠定时
+                睡眠定時
               </q-item-label>
             </q-item-section>
           </q-item>
@@ -113,7 +113,7 @@
 
             <q-item-section>
               <q-item-label class="text-subtitle1">
-                夜间模式
+                夜間模式
               </q-item-label>
             </q-item-section>
           </q-item>
@@ -147,7 +147,7 @@
       <q-card>
         <q-card-section class="row items-center">
           <q-avatar icon="power_settings_new" color="primary" text-color="white" />
-          <span class="q-ml-sm">是否退出登录？（若未开启用户验证，则操作无效）</span>
+          <span class="q-ml-sm">是否退出登入？（若未開啟使用者驗證，則操作無效）</span>
         </q-card-section>
 
         <q-card-actions align="right">
@@ -217,17 +217,17 @@ export default {
       showScroller: false,
       links: [
         {
-          title: '媒体库',
+          title: '媒體庫',
           icon: 'widgets',
           path: '/'
         },
         {
-          title: '聚合搜索',
+          title: '聚合搜尋',
           icon: 'manage_search',
           path: '/search'
         },
         {
-          title: '大图模式',
+          title: '大圖模式',
           icon: 'play_circle',
           path: '/fullScreenPlayer'
         },
@@ -237,28 +237,28 @@ export default {
           path: '/favourites'
         },
         {
-          title: '社团',
+          title: '社團',
           icon: 'group',
           path: '/circles'
         },
         {
-          title: '标签',
+          title: '標籤',
           icon: 'label',
           path: '/tags'
         },
         {
-          title: '声优',
+          title: '聲優',
           icon: 'mic',
           path: '/vas'
         },
         {
-          title: '翻译任务',
+          title: '翻譯任務',
           icon: 'subtitles',
           path: '/ai_lyric'
 
         },
         {
-          title: '设定',
+          title: '設定',
           icon: 'tune',
           path: '/admin'
         },
@@ -327,10 +327,10 @@ export default {
         })
         .catch((error) => {
           if (error.response) {
-            // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+            // 請求已發出，但伺服器響應的狀態碼不在 2xx 範圍內
             if (error.response.status === 401) {
               // this.showWarnNotif(error.response.data.error)
-              // 验证失败，跳转到登录页面
+              // 驗證失敗，跳轉到登入頁面
               const path = this.$router.currentRoute.path
               if (path !=='/login') {
                 this.$router.push('/login');
@@ -356,7 +356,7 @@ export default {
               timeout: 5000,
               actions: [
                 { label: '好', color: 'white' },
-                { label: '查看', color: 'white', handler: () => {
+                { label: '檢視', color: 'white', handler: () => {
                     Object.assign(document.createElement('a'), {
                       target: '_blank',
                       href: 'https://github.com/umonaca/kikoeru-express/releases',
@@ -373,8 +373,8 @@ export default {
               type: 'warning',
               timeout: 60000,
               actions: [
-                { label: '以后提醒我', color: 'black' },
-                { label: '前往扫描页', color: 'black', handler: () => this.$router.push('/admin/scanner')}
+                { label: '以後提醒我', color: 'black' },
+                { label: '前往掃描頁', color: 'black', handler: () => this.$router.push('/admin/scanner')}
               ],
             })
           }
@@ -391,10 +391,10 @@ export default {
         })
         .catch((error) => {
           if (error.response) {
-            // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+            // 請求已發出，但伺服器響應的狀態碼不在 2xx 範圍內
             if (error.response.status === 401) {
               // this.showWarnNotif(error.response.data.error)
-              // 验证失败，跳转到登录页面
+              // 驗證失敗，跳轉到登入頁面
               const path = this.$router.currentRoute.path
               if (path !=='/login') {
                 this.$router.push('/login');
@@ -423,7 +423,7 @@ export default {
         })
         .catch((error) => {
           if (error.response) {
-            // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+            // 請求已發出，但伺服器響應的狀態碼不在 2xx 範圍內
             if (error.response.status !== 401) {
               this.showErrNotif(error.response.data.error || `${error.response.status} ${error.response.statusText}`)
             }
@@ -449,13 +449,13 @@ export default {
 
     getLinks() {
       return this.links.filter(link => {
-        // 尚未播放时，不要显示fullScreenPlayer这个页面
+        // 尚未播放時，不要顯示fullScreenPlayer這個頁面
         if (link.path === '/fullScreenPlayer' && this.playWorkId == 0)
           return false;
         return true;
       }).map(link => {
         if (link.path === '/fullScreenPlayer') {
-          // fullScreenPlayer这个时候肯定有在播放作品，将playerWorkId添加到url中，方便刷新后依然能够找到对应的作品
+          // fullScreenPlayer這個時候肯定有在播放作品，將playerWorkId新增到url中，方便重新整理後依然能夠找到對應的作品
           link = {...link}; // copy
           link.path += `/${this.playWorkId}`;
         }
@@ -473,7 +473,7 @@ export default {
 
 
 <style lang="scss">
-// 侧边栏底部按钮
+// 側邊欄底部按鈕
   aside.q-drawer div.q-scrollarea > div.scroll > div {
     display: flex;
     flex-direction: column;
@@ -481,7 +481,7 @@ export default {
     height: 100%;
   }
 
-// 中心主要页面的尺寸样式
+// 中心主要頁面的尺寸樣式
 .page-container-style {
   position: absolute;
   left: 0;
@@ -491,7 +491,7 @@ export default {
   /* overflow-y: auto; */
 }
 
-// 为了避开底部的play bar设置的padding
+// 為了避開底部的play bar設定的padding
 .padding-bottom-play-bar {
   padding-bottom: 80px !important 
 }

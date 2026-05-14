@@ -1,18 +1,18 @@
 <template>
   <div>
     <div class="text-h5 text-weight-regular q-ma-md">
-      AI 歌词中心
+      AI 歌詞中心
     </div>
     <div class="row">
-      <q-input class="col col-sm-12 q-pa-sm" dense outlined v-model="filterWorkId" label="搜索作品id" type="number">
+      <q-input class="col col-sm-12 q-pa-sm" dense outlined v-model="filterWorkId" label="搜尋作品id" type="number">
         <template v-slot:prepend>
           RJ
         </template>
       </q-input>
-      <q-input class="col col-sm-12 q-pa-sm" dense outlined v-model="filterFileName" label="搜索文件名">
+      <q-input class="col col-sm-12 q-pa-sm" dense outlined v-model="filterFileName" label="搜尋檔名">
       </q-input>
 
-      <!-- 字幕筛选 -->
+      <!-- 字幕篩選 -->
       <q-select
         class="col-auto col-sm-12 q-pa-sm"
         dense
@@ -22,17 +22,17 @@
         v-model="statusOption"
         :options="statusOptions"
         :option-label="readableStatus"
-        label="状态筛选"
+        label="狀態篩選"
         clearable
         multiple
       />
     </div>
 
-    <!-- 刷新 -->
-    <q-btn @click="resetLoadedData" class="full-width" color="primary">刷新</q-btn>
-    <!--<q-toggle v-model="autoRefresh" :label="autoRefresh ? '自动刷新' : '关闭自动刷新'" />-->
+    <!-- 重新整理 -->
+    <q-btn @click="resetLoadedData" class="full-width" color="primary">重新整理</q-btn>
+    <!--<q-toggle v-model="autoRefresh" :label="autoRefresh ? '自動重新整理' : '關閉自動重新整理'" />-->
 
-    <!--任务列表-->
+    <!--任務列表-->
     <div>
       <q-infinite-scroll :disable="stopLoadingPage" :offset="500" @load="onLoad">
         <q-list bordered separator class="q-ma-sm">
@@ -41,9 +41,9 @@
                 <q-avatar color="primary">id</q-avatar>
                 {{ task.id }}
               </q-chip>
-              <q-item-section avatar @click.prevent.stop="copyToClipboard(task.id, `任务id '${task.id}'`)">
+              <q-item-section avatar @click.prevent.stop="copyToClipboard(task.id, `任務id '${task.id}'`)">
                 <q-img transition="fade" :src="samCoverUrl(task.work_id)" style="height: 38px; width: 38px" class="rounded-borders" />
-                <q-tooltip>点击复制任务id</q-tooltip>
+                <q-tooltip>點選複製任務id</q-tooltip>
               </q-item-section>
               <q-item-section side>
                 <q-item-label>{{ readableStatus(task.status) }}</q-item-label>
@@ -66,11 +66,11 @@
                 <q-item-label caption>{{ task.worker_status }}</q-item-label>
               </q-item-section>
               <q-item-section side>
-                <q-btn @click="openWorkDetail(task.work_id)" dense class="full-height">打开作品详情</q-btn>
+                <q-btn @click="openWorkDetail(task.work_id)" dense class="full-height">開啟作品詳情</q-btn>
               </q-item-section>
               <q-item-section side>
-                <q-btn @click="deleteTask(task.id)" class="text-negative" dense>删除</q-btn>
-                <q-btn v-if="task.status >= AILyricTaskStatus.PENDING" @click="redoTask(task.id)" dense>重试</q-btn>
+                <q-btn @click="deleteTask(task.id)" class="text-negative" dense>刪除</q-btn>
+                <q-btn v-if="task.status >= AILyricTaskStatus.PENDING" @click="redoTask(task.id)" dense>重試</q-btn>
               </q-item-section>
             </q-item>
           </q-list>
@@ -118,8 +118,8 @@ export default {
       pagination: { currentPage:0, pageSize: 12, totalCount:0 },
       stopLoadingPage: false,
 
-      autoRefresh: false, // 是否自动刷新
-      autoRefreshIntervalMills: 5000, // 自动刷新间隔
+      autoRefresh: false, // 是否自動重新整理
+      autoRefreshIntervalMills: 5000, // 自動重新整理間隔
     }
   },
 
@@ -166,7 +166,7 @@ export default {
         );
       } catch(error) {
         if (error.response) {
-          // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+          // 請求已發出，但伺服器響應的狀態碼不在 2xx 範圍內
           if (error.response.status !== 401) {
             this.showErrNotif(error.response.data.error || `${error.response.status} ${error.response.statusText}`)
           }
@@ -194,23 +194,23 @@ export default {
     readableStatus(status) {
       switch(status) {
         case AILyricTaskStatus.NONE:
-          return "非法状态";
+          return "非法狀態";
         case AILyricTaskStatus.PENDING:
-          return "待执行";
+          return "待執行";
         case AILyricTaskStatus.TRASCRIPTING:
-          return "翻译中";
+          return "翻譯中";
         case AILyricTaskStatus.SUCCESS:
           return "成功";
         case AILyricTaskStatus.ERROR:
-          return "失败";
+          return "失敗";
       }
     },
 
     async deleteTask(taskId) {
       this.$q.dialog({
-        title: "删除翻译任务",
-        message: "确认要删除翻译任务吗，字幕文件也会被一并删除，且无法恢复。",
-        ok: "删除",
+        title: "刪除翻譯任務",
+        message: "確認要刪除翻譯任務嗎，字幕檔案也會被一併刪除，且無法恢復。",
+        ok: "刪除",
         cancel: "取消",
         persistent: false
       }).onOk(async () => {
@@ -229,14 +229,14 @@ export default {
     },
 
     samCoverUrl (work_id) {
-      // 从 LocalStorage 中读取 token
+      // 從 LocalStorage 中讀取 token
       const token = this.$q.localStorage.getItem('jwt-token') || '';
       return `/api/cover/${work_id}?type=sam&token=${token}`;
     },
 
     copyToClipboard(content, hint) {
       copyToClipboard(`${content}`).then(() => {
-        this.$q.notify({message: `已复制${hint}到剪切板`, timeout: 200});
+        this.$q.notify({message: `已複製${hint}到剪下板`, timeout: 200});
       })
     }
   }

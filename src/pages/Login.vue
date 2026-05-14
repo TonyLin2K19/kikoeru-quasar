@@ -1,16 +1,16 @@
 <template>
   <q-form @submit="onSubmit" style="width: 260px;" class="absolute-center	q-gutter-md">
-    <q-input filled v-model="name" label="用户名" class="fit"
+    <q-input filled v-model="name" label="使用者名稱" class="fit"
       lazy-rules
-      :rules="[ val => val.length >= 5 || '密码长度至少为 5' ]"
+      :rules="[ val => val.length >= 5 || '密碼長度至少為 5' ]"
     />
     
-    <q-input filled type="password" v-model="password" label="密码"  class="fit"
+    <q-input filled type="password" v-model="password" label="密碼"  class="fit"
       lazy-rules
-      :rules="[ val => val.length >= 5 || '密码长度至少为 5' ]"
+      :rules="[ val => val.length >= 5 || '密碼長度至少為 5' ]"
     />
 
-    <q-btn label="登录" type="submit" color="primary" class="fit" />
+    <q-btn label="登入" type="submit" color="primary" class="fit" />
   </q-form>
 </template>
    
@@ -38,17 +38,17 @@ export default {
           try {
             this.$q.localStorage.set('jwt-token', res.data.token)
             setAxiosHeaders(res.data.token)
-            this.showSuccNotif('登录成功.')
+            this.showSuccNotif('登入成功.')
             this.$router.push('/')
           } catch (error) {
-            // 由于Web Storage API错误，
-            // 数据未成功保存
+            // 由於Web Storage API錯誤，
+            // 資料未成功儲存
             this.showErrNotif(error.message)
           }
         })
         .catch((error) => {
           if (error.response) {
-            // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+            // 請求已發出，但伺服器響應的狀態碼不在 2xx 範圍內
             if (error.response.status === 401) {
               this.showWarnNotif(error.response.data.error)
             } else {

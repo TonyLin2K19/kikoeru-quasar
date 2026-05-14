@@ -2,14 +2,14 @@
   <q-form @submit="onSubmit">
     <q-card class="q-ma-md">
       <q-toolbar>
-        <q-toolbar-title>网页偏好设置（每个浏览器之间，此部分配置相互独立）</q-toolbar-title>
+        <q-toolbar-title>網頁偏好設定（每個瀏覽器之間，此部分配置相互獨立）</q-toolbar-title>
       </q-toolbar>
 
       <q-list>
         <q-item style="height: 70px;">
           <q-item-section>
-            <q-item-label>高级音频模式</q-item-label>
-            <q-item-label caption>支持显示音频特效、左右声道反转等音频功能，建议在桌面浏览器中开启，移动端iOS设备会有声音播放bug</q-item-label>
+            <q-item-label>高階音訊模式</q-item-label>
+            <q-item-label caption>支援顯示音訊特效、左右聲道反轉等音訊功能，建議在桌面瀏覽器中開啟，移動端iOS裝置會有聲音播放bug</q-item-label>
           </q-item-section>
 
           <q-item-section avatar>
@@ -19,8 +19,8 @@
 
         <q-item style="height: 70px;">
           <q-item-section>
-            <q-item-label>启用视频源作为播放格式</q-item-label>
-            <q-item-label caption>开启此选项后，视频格式(mp4)用于播放音频的同时，也可以看到视频画面(大图模式下)</q-item-label>
+            <q-item-label>啟用影片源作為播放格式</q-item-label>
+            <q-item-label caption>開啟此選項後，影片格式(mp4)用於播放音訊的同時，也可以看到影片畫面(大圖模式下)</q-item-label>
           </q-item-section>
 
           <q-item-section avatar>
@@ -30,8 +30,8 @@
 
         <q-item style="height: 70px;">
           <q-item-section>
-            <q-item-label>切换回旧式作品卡片UI</q-item-label>
-            <q-item-label caption>搜索页面展示作品使用旧的卡片样式，旧式卡片可以直接显示所有标签</q-item-label>
+            <q-item-label>切換回舊式作品卡片UI</q-item-label>
+            <q-item-label caption>搜尋頁面展示作品使用舊的卡片樣式，舊式卡片可以直接顯示所有標籤</q-item-label>
           </q-item-section>
 
           <q-item-section avatar>
@@ -42,14 +42,14 @@
     </q-card>
     <q-card class="q-ma-md">
       <q-toolbar>
-        <q-toolbar-title>播放器设置</q-toolbar-title>
+        <q-toolbar-title>播放器設定</q-toolbar-title>
       </q-toolbar>
 
       <q-list>
         <q-item style="height: 70px;">
           <q-item-section>
-            <q-item-label>后退按钮跳跃秒数</q-item-label>
-            <q-item-label caption>播放时后退按钮跳跃秒数</q-item-label>
+            <q-item-label>後退按鈕跳躍秒數</q-item-label>
+            <q-item-label caption>播放時後退按鈕跳躍秒數</q-item-label>
           </q-item-section>
 
           <q-item-section avatar>
@@ -63,8 +63,8 @@
 
         <q-item>
           <q-item-section>
-            <q-item-label>前进按钮跳跃秒数</q-item-label>
-            <q-item-label caption>播放时前进按钮跳跃秒数</q-item-label>
+            <q-item-label>前進按鈕跳躍秒數</q-item-label>
+            <q-item-label caption>播放時前進按鈕跳躍秒數</q-item-label>
           </q-item-section>
 
           <q-item-section avatar>
@@ -80,19 +80,19 @@
 
     <q-card class="q-ma-md">
       <q-toolbar>
-        <q-toolbar-title>爬虫相关设置</q-toolbar-title>
+        <q-toolbar-title>爬蟲相關設定</q-toolbar-title>
       </q-toolbar>
 
       <q-list>
         <q-item style="height: 70px;">
           <q-item-section>
-            <q-item-label>标签语言</q-item-label>
-            <q-item-label caption>从 DLSite 爬取的标签元数据的语言</q-item-label>
+            <q-item-label>標籤語言</q-item-label>
+            <q-item-label caption>從 DLSite 爬取的標籤後設資料的語言</q-item-label>
           </q-item-section>
 
           <q-item-section avatar>
             <div class="q-gutter-sm">
-              <q-radio dense v-model="config.tagLanguage" val="zh-cn" label="简" />
+              <q-radio dense v-model="config.tagLanguage" val="zh-cn" label="簡" />
               <q-radio dense v-model="config.tagLanguage" val="zh-tw" label="繁" />
               <q-radio dense v-model="config.tagLanguage" val="ja-jp" label="日" />
             </div>
@@ -101,8 +101,8 @@
 
         <q-item>
           <q-item-section>
-            <q-item-label>DLsite 超时时间</q-item-label>
-            <q-item-label caption>默认 10000 毫秒</q-item-label>
+            <q-item-label>DLsite 超時時間</q-item-label>
+            <q-item-label caption>預設 10000 毫秒</q-item-label>
           </q-item-section>
 
           <q-item-section avatar>
@@ -117,8 +117,8 @@
 
         <q-item>
           <q-item-section>
-            <q-item-label>HVDB 超时时间</q-item-label>
-            <q-item-label caption>默认 10000 毫秒</q-item-label>
+            <q-item-label>HVDB 超時時間</q-item-label>
+            <q-item-label caption>預設 10000 毫秒</q-item-label>
           </q-item-section>
 
           <q-item-section avatar>
@@ -133,8 +133,8 @@
 
         <q-item>
           <q-item-section>
-            <q-item-label>重新请求间隔时间</q-item-label>
-            <q-item-label caption>默认 2000 毫秒</q-item-label>
+            <q-item-label>重新請求間隔時間</q-item-label>
+            <q-item-label caption>預設 2000 毫秒</q-item-label>
           </q-item-section>
 
           <q-item-section avatar>
@@ -149,8 +149,8 @@
 
         <q-item>
           <q-item-section>
-            <q-item-label>请求最大尝试次数</q-item-label>
-            <q-item-label caption>默认 5</q-item-label>
+            <q-item-label>請求最大嘗試次數</q-item-label>
+            <q-item-label caption>預設 5</q-item-label>
           </q-item-section>
 
           <q-item-section avatar>
@@ -165,8 +165,8 @@
 
         <q-item>
           <q-item-section>
-            <q-item-label>爬虫并行任务数量</q-item-label>
-            <q-item-label caption>默认 16</q-item-label>
+            <q-item-label>爬蟲並行任務數量</q-item-label>
+            <q-item-label caption>預設 16</q-item-label>
           </q-item-section>
 
           <q-item-section avatar>
@@ -181,8 +181,8 @@
 
         <q-item>
           <q-item-section>
-            <q-item-label>HTTP 代理服务主机 IP</q-item-label>
-            <q-item-label caption>此项为空时默认为本机</q-item-label>
+            <q-item-label>HTTP 代理服務主機 IP</q-item-label>
+            <q-item-label caption>此項為空時預設為本機</q-item-label>
           </q-item-section>
 
           <q-item-section avatar>
@@ -196,8 +196,8 @@
 
         <q-item>
           <q-item-section>
-            <q-item-label>HTTP 代理服务端口号 </q-item-label>
-            <q-item-label caption>此项为 0 时默认不使用代理</q-item-label>
+            <q-item-label>HTTP 代理服務埠號 </q-item-label>
+            <q-item-label caption>此項為 0 時預設不使用代理</q-item-label>
           </q-item-section>
 
           <q-item-section avatar>
@@ -214,14 +214,14 @@
 
     <q-card class="q-ma-md">
       <q-toolbar>
-        <q-toolbar-title>文件夹扫描相关设置</q-toolbar-title>
+        <q-toolbar-title>資料夾掃描相關設定</q-toolbar-title>
       </q-toolbar>
 
       <q-list>
         <q-item style="height: 70px;">
           <q-item-section>
-            <q-item-label>最大递归扫描深度</q-item-label>
-            <q-item-label caption>默认 2</q-item-label>
+            <q-item-label>最大遞迴掃描深度</q-item-label>
+            <q-item-label caption>預設 2</q-item-label>
           </q-item-section>
 
           <q-item-section avatar>
@@ -235,8 +235,8 @@
         </q-item>
         <q-item>
           <q-item-section>
-            <q-item-label>扫描时跳过清理音声库</q-item-label>
-            <q-item-label caption>是否跳过清理不存在的音声（不推荐，默认不跳过）</q-item-label>
+            <q-item-label>掃描時跳過清理音聲庫</q-item-label>
+            <q-item-label caption>是否跳過清理不存在的音聲（不推薦，預設不跳過）</q-item-label>
           </q-item-section>
 
           <q-item-section side>
@@ -248,15 +248,15 @@
 
     <q-card class="q-ma-md">
       <q-toolbar>
-        <q-toolbar-title>Web 服务器相关设置</q-toolbar-title>
-        <div class="q-pr-xs">更改此设置需要重启程序</div>
+        <q-toolbar-title>Web 伺服器相關設定</q-toolbar-title>
+        <div class="q-pr-xs">更改此設定需要重啟程式</div>
       </q-toolbar>
 
       <q-list>
         <q-item style="height: 70px;">
           <q-item-section>
-            <q-item-label>用户验证</q-item-label>
-            <q-item-label caption>是否启用用户验证（生产环境下无法修改此设置）</q-item-label>
+            <q-item-label>使用者驗證</q-item-label>
+            <q-item-label caption>是否啟用使用者驗證（生產環境下無法修改此設定）</q-item-label>
           </q-item-section>
 
           <q-item-section avatar>
@@ -266,8 +266,8 @@
 
         <q-item>
           <q-item-section>
-            <q-item-label>启用Gzip</q-item-label>
-            <q-item-label caption>对网络传输启用Gzip压缩</q-item-label>
+            <q-item-label>啟用Gzip</q-item-label>
+            <q-item-label caption>對網路傳輸啟用Gzip壓縮</q-item-label>
           </q-item-section>
 
           <q-item-section avatar>
@@ -277,8 +277,8 @@
 
         <q-item>
           <q-item-section>
-            <q-item-label>设置端口号</q-item-label>
-            <q-item-label caption>服务器监听端口号</q-item-label>
+            <q-item-label>設定埠號</q-item-label>
+            <q-item-label caption>伺服器監聽埠號</q-item-label>
           </q-item-section>
 
           <q-item-section avatar>
@@ -293,8 +293,8 @@
 
         <q-item>
           <q-item-section>
-            <q-item-label>屏蔽远程连接</q-item-label>
-            <q-item-label caption>只允许本地访问，默认为false。更改此设置需要重启程序</q-item-label>
+            <q-item-label>遮蔽遠端連線</q-item-label>
+            <q-item-label caption>只允許本地訪問，預設為false。更改此設定需要重啟程式</q-item-label>
           </q-item-section>
 
           <q-item-section avatar>
@@ -304,8 +304,8 @@
 
         <q-item>
           <q-item-section>
-            <q-item-label>token 过期时间</q-item-label>
-            <q-item-label caption>默认 2592000 秒</q-item-label>
+            <q-item-label>token 過期時間</q-item-label>
+            <q-item-label caption>預設 2592000 秒</q-item-label>
           </q-item-section>
 
           <q-item-section avatar>
@@ -320,8 +320,8 @@
 
         <q-item>
           <q-item-section>
-            <q-item-label>每页显示的音声数量</q-item-label>
-            <q-item-label caption>默认 12</q-item-label>
+            <q-item-label>每頁顯示的音聲數量</q-item-label>
+            <q-item-label caption>預設 12</q-item-label>
           </q-item-section>
 
           <q-item-section avatar>
@@ -338,14 +338,14 @@
 
     <q-card class="q-ma-md">
       <q-toolbar>
-        <q-toolbar-title>安全设置</q-toolbar-title>
+        <q-toolbar-title>安全設定</q-toolbar-title>
       </q-toolbar>
 
       <q-list>
         <q-item style="height: 70px;">
           <q-item-section>
-            <q-item-label>生产环境</q-item-label>
-            <q-item-label caption>此设置无法在网页端修改，详情请查阅GitHub Wiki中关于配置文件的说明</q-item-label>
+            <q-item-label>生產環境</q-item-label>
+            <q-item-label caption>此設定無法在網頁端修改，詳情請查閱GitHub Wiki中關於配置檔案的說明</q-item-label>
           </q-item-section>
 
           <q-item-section avatar>
@@ -357,14 +357,14 @@
 
     <q-card class="q-ma-md">
       <q-toolbar>
-        <q-toolbar-title>其它设置</q-toolbar-title>
+        <q-toolbar-title>其它設定</q-toolbar-title>
       </q-toolbar>
 
       <q-list>
         <q-item style="height: 70px;">
           <q-item-section>
-            <q-item-label>检查更新</q-item-label>
-            <q-item-label caption>打开网页时是否检查更新</q-item-label>
+            <q-item-label>檢查更新</q-item-label>
+            <q-item-label caption>開啟網頁時是否檢查更新</q-item-label>
           </q-item-section>
 
           <q-item-section avatar>
@@ -374,8 +374,8 @@
 
         <q-item v-if="config.checkUpdate">
           <q-item-section>
-            <q-item-label>检查测试版更新</q-item-label>
-            <q-item-label caption>是否检查测试版更新</q-item-label>
+            <q-item-label>檢查測試版更新</q-item-label>
+            <q-item-label caption>是否檢查測試版更新</q-item-label>
           </q-item-section>
 
           <q-item-section avatar>
@@ -385,8 +385,8 @@
 
         <q-item>
           <q-item-section>
-            <q-item-label>数据库使用默认路径</q-item-label>
-            <q-item-label caption>使用程序所在位置下的sqlite文件夹，并忽略databaseFolderDir设置（如无必要请勿修改，更改此设置需要重启程序）</q-item-label>
+            <q-item-label>資料庫使用預設路徑</q-item-label>
+            <q-item-label caption>使用程式所在位置下的sqlite資料夾，並忽略databaseFolderDir設定（如無必要請勿修改，更改此設定需要重啟程式）</q-item-label>
           </q-item-section>
 
           <q-item-section avatar>
@@ -396,8 +396,8 @@
 
         <q-item>
           <q-item-section>
-            <q-item-label>封面使用默认路径</q-item-label>
-            <q-item-label caption>使用程序所在位置下的covers文件夹，并忽略封面文件夹路径设置</q-item-label>
+            <q-item-label>封面使用預設路徑</q-item-label>
+            <q-item-label caption>使用程式所在位置下的covers資料夾，並忽略封面資料夾路徑設定</q-item-label>
           </q-item-section>
 
           <q-item-section avatar>
@@ -408,7 +408,7 @@
     </q-card>
 
     <div class="q-ma-lg row justify-end">
-      <q-btn :loading="loading" label="保存" type="submit" color="primary" />
+      <q-btn :loading="loading" label="儲存" type="submit" color="primary" />
     </div>
   </q-form>
 </template>
@@ -451,7 +451,7 @@ export default {
         })
         .catch((error) => {
           if (error.response) {
-            // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+            // 請求已發出，但伺服器響應的狀態碼不在 2xx 範圍內
             if (error.response.status !== 401) {
               this.showErrNotif(error.response.data.error || `${error.response.status} ${error.response.statusText}`)
             }
@@ -477,7 +477,7 @@ export default {
         .catch((error) => {
           this.loading = false
           if (error.response) {
-            // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+            // 請求已發出，但伺服器響應的狀態碼不在 2xx 範圍內
             this.showErrNotif(error.response.data.error || `${error.response.status} ${error.response.statusText}`)
           } else {
             this.showErrNotif(error.message || error)

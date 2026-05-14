@@ -39,7 +39,7 @@ export default {
     return {
       beTouched: false,
 
-      // 鼠标按下时的位置
+      // 滑鼠按下時的位置
       startX: 0,
       startY: 0,
 
@@ -63,7 +63,7 @@ export default {
       this.showSizeBar = true;
       this.laterTimer = setTimeout(() => {
         this.showSizeBar = false;
-      }, 3 * 1000); // 延迟关闭滑块
+      }, 3 * 1000); // 延遲關閉滑塊
     },
 
     /**
@@ -78,7 +78,7 @@ export default {
       ev.preventDefault()
       this.beTouched = true
 
-      // 移动端使用 ev.touches[0]
+      // 移動端使用 ev.touches[0]
       const touch = this.getTouch(ev)
       this.startX = touch.clientX - this.$refs.draggable.offsetLeft
       this.startY = touch.clientY - this.$refs.draggable.offsetTop
@@ -95,7 +95,7 @@ export default {
       // ev.preventDefault()
       const touch = this.getTouch(ev)
 
-      // 计算 element 新位置坐标
+      // 計算 element 新位置座標
       const eleX = touch.clientX - this.startX
       const eleY = touch.clientY - this.startY
 
@@ -103,7 +103,7 @@ export default {
       this.$refs.draggable.style.top = eleY + 'px'
     },
 
-    // 用户松开滑块之后才会触发此方法
+    // 使用者鬆開滑塊之後才會觸發此方法
     onFontSizeChange(v) {
       console.warn("fontSize change to: ", v)
       localStorage.lyricFontSize = v;
@@ -139,11 +139,11 @@ export default {
   .lyric-container {
     position: relative;
 
-    /* 水平位置置于中间 */
+    /* 水平位置置於中間 */
     left: 50vw;
     transform: translateX(-50%);
 
-    /* 垂直位置置于底部playBar尚未考上一点，这个后面可以手动调整 */
+    /* 垂直位置置於底部playBar尚未考上一點，這個後面可以手動調整 */
     top: -80px;
     
     display: flex;

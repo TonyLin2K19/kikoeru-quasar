@@ -95,7 +95,7 @@ export default {
     async onVirtualScroll(details) {
       // console.log('virtual on virtual scroll: ', details.from, '->', details.to, ' index = ', details.index);
       const alreadyScrolledCount = details.index + 1;
-      const loadMoreThres = 3; // 当剩余显示的数量小于这个数字时，加载更多播放历史
+      const loadMoreThres = 3; // 當剩餘顯示的數量小於這個數字時，載入更多播放歷史
       if (loadMoreThres > (this.works.length - alreadyScrolledCount)) {
         this.getHistory();
       }
@@ -106,7 +106,7 @@ export default {
       this.$refs.scroll.$el.scrollLeft += (e.deltaX || e.deltaY);
     },
 
-    // 返回单个作品播放历史的简单信息
+    // 返回單個作品播放歷史的簡單資訊
     getWorkHistoryInfo(work) {
       const state = work.state;
       const lastPlayItem = state.queue[state.index]

@@ -61,9 +61,9 @@ export default {
     }
   },
   mounted() {
-    this.onSlotResize(); // 初始立即计算一次
+    this.onSlotResize(); // 初始立即計算一次
 
-    this.onSlotResize = debounce(this.onSlotResize, 500); // 之后防抖动
+    this.onSlotResize = debounce(this.onSlotResize, 500); // 之後防抖動
     this.resizeObserver = new ResizeObserver(this.onSlotResize);
     this.resizeObserver.observe(this.slot);
     this.resizeObserver.observe(this.container);
@@ -72,12 +72,12 @@ export default {
     onSlotResize() {
       const containerWidth = Math.round(this.container.getBoundingClientRect().width);
 
-      let slotWidth = 0; // 单个滚动元素的长度
+      let slotWidth = 0; // 單個滾動元素的長度
 
-      if (this.needScroll) { // 正在滚动时，this.slot包含两个滚动元素，需要计算一下
+      if (this.needScroll) { // 正在滾動時，this.slot包含兩個滾動元素，需要計算一下
         const slotSpacerSlotWidth = Math.round(this.slot.getBoundingClientRect().width);
         slotWidth = Math.floor((slotSpacerSlotWidth - this.spacerWidth) / 2)
-      } else { // 没有滚动时，this.slot就是单个滚动元素的长度
+      } else { // 沒有滾動時，this.slot就是單個滾動元素的長度
         slotWidth = Math.round(this.slot.getBoundingClientRect().width);
       }
 

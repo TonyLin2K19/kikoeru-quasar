@@ -19,7 +19,7 @@
               <div class="text-subtitle2">{{ preview_img_idx+1 }}/{{ preview_img_list.length }}</div>
             </div>
             <div v-if="playWorkId > 0" class="col-auto">
-              <q-btn outline @click="setVisualPlayerCover(preview_img_list[preview_img_idx])">用作可视化封面</q-btn>
+              <q-btn outline @click="setVisualPlayerCover(preview_img_list[preview_img_idx])">用作視覺化封面</q-btn>
             </div>
           </div>
         </q-card-section>
@@ -29,9 +29,9 @@
         </q-card-section>
 
         <q-card-actions align="around">
-          <q-btn flat label="上一个" color="primary" @click="changePreviewImg(false)" />
-          <q-btn flat label="关闭" color="negative" v-close-popup />
-          <q-btn flat label="下一个" color="primary" @click="changePreviewImg(true)" />
+          <q-btn flat label="上一個" color="primary" @click="changePreviewImg(false)" />
+          <q-btn flat label="關閉" color="negative" v-close-popup />
+          <q-btn flat label="下一個" color="primary" @click="changePreviewImg(true)" />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -60,9 +60,9 @@
 
           <q-item-section>
             <q-item-label>{{ item.title }}</q-item-label>
-            <q-item-label v-if="item.children" caption lines="1">{{ `${item.children.length} 项目` }}</q-item-label>
+            <q-item-label v-if="item.children" caption lines="1">{{ `${item.children.length} 專案` }}</q-item-label>
 
-            <!--音频文件时长-->
+            <!--音訊檔案時長-->
             <q-item-label
               v-if="item.type === 'audio' && typeof(item.duration) === 'number'"
               caption
@@ -77,7 +77,7 @@
             <AIStatus :status="item.status"/>
           </q-item-section>
 
-          <!-- 上下文菜单 -->
+          <!-- 上下文選單 -->
           <q-menu
             v-if="item.type === 'audio' || item.type === 'text' || item.type === 'image' || item.type === 'other'"
             touch-position
@@ -88,7 +88,7 @@
           >
             <q-list separator>
               <q-item clickable @click="addToQueue(item)" v-if="item.type === 'audio'">
-                <q-item-section>添加到播放列表</q-item-section>
+                <q-item-section>新增到播放列表</q-item-section>
               </q-item>
 
               <q-item clickable @click="playNext(item)" v-if="item.type === 'audio'">
@@ -96,11 +96,11 @@
               </q-item>
 
               <q-item clickable @click="download(item)">
-                <q-item-section>下载文件</q-item-section>
+                <q-item-section>下載檔案</q-item-section>
               </q-item>
 
               <q-item clickable @click="aiTranslateToServer(item)" v-if="item.type === 'audio'">
-                <q-item-section>进行AI翻译</q-item-section>
+                <q-item-section>進行AI翻譯</q-item-section>
               </q-item>
             </q-list>
           </q-menu>
@@ -138,8 +138,8 @@ export default {
 
       sumAITaskStatus: AILyricTaskStatus.NONE,
       
-      checkAITaskStatusIntervalId: 0, // 周期性检查ai翻译进度的inteval id
-      checkAITaskIntervalSeconds: 10, // 检查间隔
+      checkAITaskStatusIntervalId: 0, // 週期性檢查ai翻譯進度的inteval id
+      checkAITaskIntervalSeconds: 10, // 檢查間隔
     }
   },
 
@@ -166,13 +166,13 @@ export default {
         case AILyricTaskStatus.SUCCESS:
         case AILyricTaskStatus.ERROR:
         case AILyricTaskStatus.NONE:
-          // 本作品的翻译任务均处于静止状态，无需周期性检查
+          // 本作品的翻譯任務均處於靜止狀態，無需週期性檢查
           this.disableIntervalCheckAITasks();
           break;
 
         case AILyricTaskStatus.PENDING:
         case AILyricTaskStatus.TRASCRIPTING:
-          // 本作品的翻译任务处于运行状态或者排队状态，需要周期性检查
+          // 本作品的翻譯任務處於執行狀態或者排隊狀態，需要週期性檢查
           this.enableIntervalCheckAITasks();
           break;
       }
@@ -294,7 +294,7 @@ export default {
       link.click();
     },
 
-    // 翻译当前所在目录的所有音频文件，注意不是当前作品的所有音频文件
+    // 翻譯當前所在目錄的所有音訊檔案，注意不是當前作品的所有音訊檔案
     async translateCwd() {
       // console.log('cwd = ', this.fatherFolder);
       for (const item of this.fatherFolder) {
@@ -310,7 +310,7 @@ export default {
         await this.enableIntervalCheckAITasks();
       } catch(error) {
         if (error.response) {
-          // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+          // 請求已發出，但伺服器響應的狀態碼不在 2xx 範圍內
           if (error.response.status !== 401) {
             this.showErrNotif(error.response.data.error || `${error.response.status} ${error.response.statusText}`);
           }
@@ -325,9 +325,9 @@ export default {
       const urlWithoutToken = imgFile.mediaDownloadUrl ? `${imgFile.mediaDownloadUrl}` : `/api/media/download/${imgFile.hash}`;
       this.$store.commit('AudioPlayer/SET_VISUAL_PLAYER_COVER_URL', urlWithoutToken);
       this.$q.notify({
-        message: "封面设置成功",
+        message: "封面設定成功",
         actions: [
-          { label: "前往大屏页面",
+          { label: "前往大屏頁面",
             handler: () => {
               // this.$router.push(`/fullScreenPlayer/${this.playWorkId}`)
               this.$router.push(`/fullScreenPlayer`)
@@ -381,7 +381,7 @@ export default {
     },
 
     async updateTreeAITaskStatus() {
-      console.log("检查翻译进度")
+      console.log("檢查翻譯進度")
 
       const tasks = await ServerApi.searchWorkTask(this.metadata.id);
 
@@ -424,11 +424,11 @@ export default {
         if (includeTranscripting) return AILyricTaskStatus.TRASCRIPTING;
         else if (includePending) return AILyricTaskStatus.PENDING;
         else if (isSuccessMoreImportant) {
-          // 对于单个音频文件的多个翻译任务，我们更在意是否有成功的任务
+          // 對於單個音訊檔案的多個翻譯任務，我們更在意是否有成功的任務
           if (includeSuccess) return AILyricTaskStatus.SUCCESS;
           else if (includeError) return AILyricTaskStatus.ERROR;
         } else {
-          // 对于文件夹内多个音频的翻译状态，我们更在意是否有错误
+          // 對於資料夾內多個音訊的翻譯狀態，我們更在意是否有錯誤
           if (includeError) return AILyricTaskStatus.ERROR;
           else if (includeSuccess) return AILyricTaskStatus.SUCCESS;
         }
@@ -481,7 +481,7 @@ export default {
 
     async enableIntervalCheckAITasks() {
       if (this.checkAITaskStatusIntervalId > 0) clearInterval(this.checkAITaskStatusIntervalId)
-      console.log("定期检查ai歌词翻译进度")
+      console.log("定期檢查ai歌詞翻譯進度")
       
       await this.updateTreeAITaskStatus();
       this.checkAITaskStatusIntervalId = setInterval(
@@ -491,14 +491,14 @@ export default {
     },
 
     disableIntervalCheckAITasks() {
-      console.log("取消定期检查ai歌词翻译进度")
+      console.log("取消定期檢查ai歌詞翻譯進度")
       clearInterval(this.checkAITaskStatusIntervalId)
       this.checkAITaskStatusIntervalId = 0;
     },
   },
 
   created() {
-    this.updateTreeAITaskStatus = debounce(this.updateTreeAITaskStatus, 500); // ai进度检查防抖动2秒
+    this.updateTreeAITaskStatus = debounce(this.updateTreeAITaskStatus, 500); // ai進度檢查防抖動2秒
   },
   
   mounted() {

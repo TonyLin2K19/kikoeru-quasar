@@ -39,7 +39,7 @@ export default {
       visibility: "hide",
       // visibility: "show",
       isFireFox: navigator.userAgent.toLowerCase().indexOf('firefox') > -1,
-      isVideoCanPlay: false, // 用以记录video能否播放并进入画中画模式，如果用户操作太快，此时video还没有准备好，需要延迟到video canplay事件发生后才能进入画中画状态
+      isVideoCanPlay: false, // 用以記錄video能否播放並進入畫中畫模式，如果使用者操作太快，此時video還沒有準備好，需要延遲到video canplay事件發生後才能進入畫中畫狀態
       pixelRatio: window.devicePixelRatio,
 
 
@@ -85,7 +85,7 @@ export default {
 
     drawLyric(str) {
       console.log('draw lyric: ', str)
-      // str += " 强制增加歌词长度测试，强制增加歌词长度测试，强制增加歌词长度测试，"
+      // str += " 強制增加歌詞長度測試，強制增加歌詞長度測試，強制增加歌詞長度測試，"
       const fontScale = 0.7 
       const expectCharCount = 30
       const cvs = this.$refs.canvas
@@ -103,48 +103,48 @@ export default {
       ctx.font = `bold ${fontSize}px "-apple-system", "BlinkMacSystemFont", "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", "Helvetica", "Arial", "sans-serif", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"`
       ctx.fillStyle = '#9c27b0'
 
-      // 可绘制参数
+      // 可繪製引數
       const padWidth = 5
       const padHeight = 0
 
       const allowedLines = Math.floor((cvs.height - padHeight * 2) / fontSize)
       const allowedWidth = cvs.width - padWidth * 2
 
-      // 首次测量全部字符串
+      // 首次測量全部字串
       const allTxt = ctx.measureText(str)
       const neededLines = Math.ceil(allTxt.width / allowedWidth)
       const drawLines = Math.min(neededLines, allowedLines)
       const restLineHeight = cvs.height - drawLines * fontSize
-      let readCharIdx = 0 // 将要添加到绘制行的字符序号
+      let readCharIdx = 0 // 將要新增到繪製行的字元序號
 
       const chars = str.split("")
 
-      // 遍历每一行
+      // 遍歷每一行
       for (let line = 0; line < drawLines && readCharIdx < chars.length; line++) {
-        // 填充当前行直到allowedWidth
+        // 填充當前行直到allowedWidth
         let lineStr = ""
         let lineStrMetric = null
         while (readCharIdx < str.length) {
           lineStr += chars[readCharIdx]
           lineStrMetric = ctx.measureText(lineStr)
           if (lineStrMetric.width > allowedWidth) {
-            // 当前行已满，准备绘制lineStr
+            // 當前行已滿，準備繪製lineStr
             lineStr = lineStr.substr(0, lineStr.length - 1)
             break;
           } else {
-            // 当前行仍然有剩余空间，继续往lineStr添加字符
+            // 當前行仍然有剩餘空間，繼續往lineStr新增字元
             readCharIdx++;
           }
         }
 
         if (line == drawLines - 1 && readCharIdx < chars.length) {
-          // 已到达最后一行，然而还有文字没有上屏，将当前行末尾的几个文字变为省略号，忽略后续其他文字
+          // 已到達最後一行，然而還有文字沒有上屏，將當前行末尾的幾個文字變為省略號，忽略後續其他文字
           lineStr = lineStr.substr(0, lineStr.length - 3) + "..."
         }
 
         lineStrMetric = ctx.measureText(lineStr)
 
-        // 绘制lineStr
+        // 繪製lineStr
         const drawX = padWidth + (cvs.width - lineStrMetric.width) / 2
 
         const drawY = restLineHeight / 2 + line * fontSize + lineStrMetric.actualBoundingBoxAscent
@@ -174,7 +174,7 @@ export default {
         console.warn("enter pip")
       })
       this.video.addEventListener("leavepictureinpicture", () => {
-        if (!this.stopPIPLyric) return // 组件已经被销毁
+        if (!this.stopPIPLyric) return // 元件已經被銷燬
         this.stopPIPLyric()
         this.setEnablePIPLyrics(false)
         this.pipWindow = null
@@ -192,11 +192,11 @@ export default {
     },
 
     forceVideoStartLoadMetadata() {
-      // 首先绘制一次，初始化video状态，保证dataloaded，是的后续画中画状态能够立即进入
+      // 首先繪製一次，初始化video狀態，保證dataloaded，是的後續畫中畫狀態能夠立即進入
       let forceDrawCount = 5;
       const draw = () => {
         if (forceDrawCount < 0) {
-          if (!this.enablePIPLyrics || !this.playing)this.video.pause() // 停止强制渲染后，根据播放器状态决定video是否暂停
+          if (!this.enablePIPLyrics || !this.playing)this.video.pause() // 停止強制渲染後，根據播放器狀態決定video是否暫停
           return;
         }
         forceDrawCount--;
@@ -207,16 +207,16 @@ export default {
     },
 
     openPIPVideoMode() {
-      // this.drawLyric(this.currentLyric) // 首先绘制一次
+      // this.drawLyric(this.currentLyric) // 首先繪製一次
       this.video.play()
-      console.log("打开桌面歌词")
+      console.log("開啟桌面歌詞")
 
       if (
         typeof this.video.requestPictureInPicture === 'function' &&
         document.pictureInPictureEnabled
       ) {
         this.video.requestPictureInPicture().then(() => {
-          // 解决歌词video播放、暂停事件无法传递到音频播放状态的问题
+          // 解決歌詞video播放、暫停事件無法傳遞到音訊播放狀態的問題
           if (!this.playing) this.video.pause()
           // from user
           this.video.onplay = () => {
@@ -234,17 +234,17 @@ export default {
       }
 
       if (this.isFireFox) {
-        // 对火狐浏览器，将video强制显示出来，让用户自己设置video进入画中画模式，然后自动隐藏
+        // 對火狐瀏覽器，將video強制顯示出來，讓使用者自己設定video進入畫中畫模式，然後自動隱藏
         this.visibility = "manulSet"
         setTimeout(()=>{
           this.visibility = "hide"
         }, 10000)
       } else {
-        // // 20230805 更新，下面这个对SE的处理根本没用，SE一会能有一会不行，相当玄学，
-        // // 有的时候多等一下再点OK按钮就能显示出来了，有的时候又不行。算了，不管这个，其他iPhone、ipad、桌面都没有问题
-        // // 对于其他浏览器其实无需做额外操作
-        // // 但是目前发现iPhoneSE1 15.7.7 的safari奇怪的行为，必须要将video/canvas显示出来一下，然后才能正常进入画中画模式，否则video将无法看到
-        // // 这里就强制所有浏览器环境都进行这样一个操作，先show出来，然后立即hide下去
+        // // 20230805 更新，下面這個對SE的處理根本沒用，SE一會能有一會不行，相當玄學，
+        // // 有的時候多等一下再點OK按鈕就能顯示出來了，有的時候又不行。算了，不管這個，其他iPhone、ipad、桌面都沒有問題
+        // // 對於其他瀏覽器其實無需做額外操作
+        // // 但是目前發現iPhoneSE1 15.7.7 的safari奇怪的行為，必須要將video/canvas顯示出來一下，然後才能正常進入畫中畫模式，否則video將無法看到
+        // // 這裡就強制所有瀏覽器環境都進行這樣一個操作，先show出來，然後立即hide下去
         // this.visibility = "show"
         // console.log("show pip video temp")
         // setTimeout(() => {
@@ -256,19 +256,19 @@ export default {
     },
 
     showUserPrompt() {
-      let msg = "请点击‘打开’按钮确认显示桌面歌词，或者点击‘取消’关闭桌面歌词。（请注意，桌面歌词打开后，原先网页内的歌词就会被隐藏掉）"
-      let okMsg = "请继续"
+      let msg = "請點選‘開啟’按鈕確認顯示桌面歌詞，或者點選‘取消’關閉桌面歌詞。（請注意，桌面歌詞開啟後，原先網頁內的歌詞就會被隱藏掉）"
+      let okMsg = "請繼續"
       if (this.isFireFox) {
-        msg = "检测到FireFox浏览器，此浏览器下必须由用户手动选择开启画中画功能，请在10秒内手动选择左上角出现的video组件并开启画中画功能，10秒后video组件将会隐藏并无法操作。如果错过，您也可以重新关闭、打开桌面歌词功能，来再次操作。"
-        // firefox尚不支持这种js触发画中画功能，先将video显示出来，让用户手动选择画中画功能，然后隐藏页面中的video元素
+        msg = "檢測到FireFox瀏覽器，此瀏覽器下必須由使用者手動選擇開啟畫中畫功能，請在10秒內手動選擇左上角出現的video元件並開啟畫中畫功能，10秒後video元件將會隱藏並無法操作。如果錯過，您也可以重新關閉、開啟桌面歌詞功能，來再次操作。"
+        // firefox尚不支援這種js觸發畫中畫功能，先將video顯示出來，讓使用者手動選擇畫中畫功能，然後隱藏頁面中的video元素
         okMsg = "好的"
       }
 
       this.$q.dialog({
-        title: '桌面歌词',
+        title: '桌面歌詞',
         message: msg,
         ok: okMsg,
-        cancel: "关闭桌面歌词",
+        cancel: "關閉桌面歌詞",
         persistent: false
       }).onOk(async () => {
         this.openPIPVideoMode()
@@ -306,12 +306,12 @@ export default {
       if (this.isVideoCanPlay) {
         this.showUserPrompt() 
       } else {
-        this.$q.notify({message: "桌面歌词打开失败，请播放音频5秒后再次尝试打开", timeout: 500})
+        this.$q.notify({message: "桌面歌詞開啟失敗，請播放音訊5秒後再次嘗試開啟", timeout: 500})
       }
     },
 
     syncPlayingStateFromAudioToPIPVideo() {
-      // 将音频状态 同步到 歌词video上
+      // 將音訊狀態 同步到 歌詞video上
       if (!this.enablePIPLyrics) return;
       if (this.playing && this.video.paused) this.video.play()
       else if (!this.playing && !this.video.paused) this.video.pause()
@@ -329,8 +329,8 @@ export default {
       else  this.tryEnterPIPAndShowUserPrompt()
     },
 
-    // 监听播放列表，如果有新增，一般是打开的桌面歌词状态的时候，还没有播放作品，
-    // 如果这个时候突然播放作品，就需要做检查并进入歌词画中画模式
+    // 監聽播放列表，如果有新增，一般是開啟的桌面歌詞狀態的時候，還沒有播放作品，
+    // 如果這個時候突然播放作品，就需要做檢查並進入歌詞畫中畫模式
     isQueueEmpty(value) {
       if (value) this.stopPIPLyric()
       else if (this.enablePIPLyrics) this.tryEnterPIPAndShowUserPrompt()
@@ -344,13 +344,13 @@ export default {
       this.drawLyric(this.currentLyric);
     },
     "$q.dark.isActive"() {
-      // 监听黑夜模式，立即重新绘制
+      // 監聽黑夜模式，立即重新繪製
       this.drawLyric(this.currentLyric);
     }
   },
 
   created() {
-    // 防止快速切换导致video/audio相互之间的状态递归
+    // 防止快速切換導致video/audio相互之間的狀態遞迴
     //  user ===play/pause---> PIP video --- play/pause ---> audio
     //                            ^                           |
     //                            |                           |
@@ -361,7 +361,7 @@ export default {
   },
 
   mounted() {
-    // this.$q.notify({message: "创建桌面歌词组件中，请稍等...", timeout: 500})
+    // this.$q.notify({message: "建立桌面歌片語件中，請稍等...", timeout: 500})
     // addEventListener('mousemove', onCursorMove(this), false)
     // addEventListener('touchmove', onCursorMove(this), false)
     this.initCanvas()

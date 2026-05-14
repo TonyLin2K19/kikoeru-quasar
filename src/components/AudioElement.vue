@@ -1,6 +1,6 @@
 <template>
 
-  <!--在进度条周围监听mouseup、mousedown事件，辅助进度条状态切换-->
+  <!--在進度條周圍監聽mouseup、mousedown事件，輔助進度條狀態切換-->
   <div class="q-px-md"
       @mousedown.capture="onPanSlider('start')"
       @mouseup.capture="onPanSlider('end')"
@@ -24,10 +24,10 @@
       @waiting="onWaiting()"
       @pause="onPause()"
     >
-      <!--使用video组件来播放音频和视频文件，同时隐藏原生的vue-plyr组件，这里的组件只会留下一个进度条的功能
-      之所以用video，是因为video可以设置mp3等音频文件，也可以播放mp4等视频文件，在播放视频的时候，还能够用该video元素作为canvas绘制来源，
-      反之，audio虽然可以播放video的音频，但是将其作为canvas的绘制源，因此倾向于使用video来播放所有媒体元素-->
-      <!--注意，这里video设置了一个id，因为需要被其他组件通过document.querySelector方式进行查找引用-->
+      <!--使用video元件來播放音訊和影片檔案，同時隱藏原生的vue-plyr元件，這裡的元件只會留下一個進度條的功能
+      之所以用video，是因為video可以設定mp3等音訊檔案，也可以播放mp4等影片檔案，在播放影片的時候，還能夠用該video元素作為canvas繪製來源，
+      反之，audio雖然可以播放video的音訊，但是將其作為canvas的繪製源，因此傾向於使用video來播放所有媒體元素-->
+      <!--注意，這裡video設定了一個id，因為需要被其他元件通過document.querySelector方式進行查詢引用-->
       <video v-if="enableVideoSource" class="hide-in-global-page-for-pip" id="mediaVideo" crossorigin="anonymous" playsinline controls="controls" style="display: inline;">
         <source v-if="source" :src="source" />
       </video>
@@ -58,7 +58,7 @@ function convert_srt_vtt_to_lrc(text) {
   let i = 0;
   while(i < lines.length) {
 
-    // 注意 srt 和 vtt 字幕的毫秒区分符号一个是`,'另一个是`.
+    // 注意 srt 和 vtt 字幕的毫秒區分符號一個是`,'另一個是`.
     // audio.srt be like
     // 1
     // 00:01:22,343 --> 00:03:22,344
@@ -77,8 +77,8 @@ function convert_srt_vtt_to_lrc(text) {
     // 2
     // ...
 
-    if (/^\d*$/.test(lines[i++])) { /* parse 序号 */
-      if (timeParseRe.test(lines[i])) { /* parse 时间戳 */
+    if (/^\d*$/.test(lines[i++])) { /* parse 序號 */
+      if (timeParseRe.test(lines[i])) { /* parse 時間戳 */
         const [_/* whole string */ , h, m, s, _mill_sep /* ignore */, ms] = timeParseRe.exec(lines[i]).map(x => parseInt(x));
         let texts = [];
         i++;
@@ -124,9 +124,9 @@ export default {
       lrcObj: null,
       lrcAvailable: false,
 
-      // 音频播放器进度条实现有些trick，普通的slider不能直接用，
-      // 因为time的更新源有两个【audio播放】【用户输入】，
-      // 两个更新源回导致进度条跳转出错，需要在【用户输入时】关闭【audio播放】发出的time更新（slider上）
+      // 音訊播放器進度條實現有些trick，普通的slider不能直接用，
+      // 因為time的更新源有兩個【audio播放】【使用者輸入】，
+      // 兩個更新源回導致進度條跳轉出錯，需要在【使用者輸入時】關閉【audio播放】發出的time更新（slider上）
       isChangingCurrentTime: false,
       changeCurrentTime: 0,
     }
@@ -138,7 +138,7 @@ export default {
     },
 
     source () {
-      // 从 LocalStorage 中读取 token
+      // 從 LocalStorage 中讀取 token
       const token = this.$q.localStorage.getItem('jwt-token') || ''
       // New API
       if (this.currentPlayingFile.mediaStreamUrl) {
@@ -190,7 +190,7 @@ export default {
   watch: {
     playing (flag) {
       if (this.player.duration) {
-        // 缓冲至可播放状态
+        // 緩衝至可播放狀態
         flag ? this.player.play() : this.player.pause()
       }
       // this.playLrc(flag);
@@ -199,7 +199,7 @@ export default {
     // watch source -> media.load() -> canPlay -> player.play()
     source (url) {
       if (url) {
-        // 加载新音频/视频文件
+        // 載入新音訊/影片檔案
         this.player.media.load();
         this.loadLrcFile();
         this.updateMediaSessionMetadata();
@@ -207,17 +207,17 @@ export default {
     },
 
     muted (flag) {
-      // 切换静音状态
+      // 切換靜音狀態
       this.player.muted = flag
     },
 
     volume (val) {
-      // 屏蔽非法数值
+      // 遮蔽非法數值
       if (val < 0 || val > 1) {
         return
       }
 
-      // 调节音量
+      // 調節音量
       this.player.volume = val
     },
     rewindSeekMode(rewind) {
@@ -239,10 +239,10 @@ export default {
     newCurrentTime(v) {
       if (v < 0) return;
       this.player.currentTime = v;
-      this.SET_NEW_CURRENT_TIME(-1); // 标记时间已经更新到media上了
+      this.SET_NEW_CURRENT_TIME(-1); // 標記時間已經更新到media上了
     },
     lyricOffsetSeconds() {
-      this.playLrc(this.playing); // 强制更新一下歌词时间
+      this.playLrc(this.playing); // 強制更新一下歌詞時間
     },
     enablePIPLyrics(enablePIP) {
       if (enablePIP) {
@@ -254,14 +254,14 @@ export default {
   },
 
   created() {
-    this.debouncedPlayLrc = debounce(this.playLrc, 100, true /* 首次更改应当立即生效，对后续更改防抖动 */); // 防抖动
+    this.debouncedPlayLrc = debounce(this.playLrc, 100, true /* 首次更改應當立即生效，對後續更改防抖動 */); // 防抖動
   },
 
   methods: {
     formatSeconds,
 
     /**
-     * 当 外部暂停（线控暂停、软件切换）、用户控制暂停、seek 时会触发本事件
+     * 當 外部暫停（線控暫停、軟體切換）、使用者控制暫停、seek 時會觸發本事件
      */
     onPause() {
       // console.log('onPause')
@@ -269,7 +269,7 @@ export default {
       this.PAUSE()
     },
     /**
-     * 当播放器真正开始播放时会触发本事件
+     * 當播放器真正開始播放時會觸發本事件
      */
     onPlaying() {
       // console.log('playing')
@@ -277,7 +277,7 @@ export default {
       this.PLAY()
     },
     /**
-     * 当播放器缓冲区空，被迫暂停加载时会触发本事件
+     * 當播放器緩衝區空，被迫暫停載入時會觸發本事件
      */
     onWaiting() {
       // console.log('waiting')
@@ -304,7 +304,7 @@ export default {
     ]),
 
     onCanplay () {
-      // 缓冲至可播放状态时触发 (只有缓冲至可播放状态, 才能获取媒体文件的播放时长)
+      // 緩衝至可播放狀態時觸發 (只有緩衝至可播放狀態, 才能獲取媒體檔案的播放時長)
       this.SET_DURATION(this.player.duration)
 
       // 播放
@@ -312,20 +312,20 @@ export default {
         this.player.play()
       }
 
-      // 当音频文件在网页中加载完毕，可以播放时
-      // 检查此前是否有需要恢复的历史进度，如果尚未恢复
-      // 则设置currentTime到指定的时间点，然后标记已经恢复历史播放记录
+      // 當音訊檔案在網頁中載入完畢，可以播放時
+      // 檢查此前是否有需要恢復的歷史進度，如果尚未恢復
+      // 則設定currentTime到指定的時間點，然後標記已經恢復歷史播放記錄
       if (!this.resumeHistroyDone) {
         this.player.currentTime = this.resumeHistroySeconds;
         this.RESUME_HISTROY_SECONDS_DONE()
-        this.$q.notify({message: "已恢复播放历史", timeout: 1000})
+        this.$q.notify({message: "已恢復播放歷史", timeout: 1000})
       }
     },
 
     onTimeupdate () {
-      // 当目前的播放位置已更改时触发
+      // 當目前的播放位置已更改時觸發
       this.SET_CURRENT_TIME(this.player.currentTime)
-      if (this.enablePIPLyrics) this.debouncedPlayLrc(false) // 开启桌面歌词后，用视频的time更新事件驱动歌词更新，false表示禁用掉LrcObject本身的事件更新
+      if (this.enablePIPLyrics) this.debouncedPlayLrc(false) // 開啟桌面歌詞後，用影片的time更新事件驅動歌詞更新，false表示停用掉LrcObject本身的事件更新
       if (this.sleepMode && this.sleepTime) {
         const currentTime = new Date()
         const currentHourStr = currentTime.getHours().toString().padStart(2, '0')
@@ -343,10 +343,10 @@ export default {
     },
 
     onEnded () {
-      // 当前文件播放结束时触发
+      // 當前檔案播放結束時觸發
       switch (this.playMode.name) {
         case "all repeat":
-          // 循环播放
+          // 迴圈播放
           if (this.queueIndex === this.queue.length - 1) {
             this.SET_TRACK(0)
           } else {
@@ -354,13 +354,13 @@ export default {
           }
           break
         case "repeat once":
-          // 单曲循环
+          // 單曲迴圈
           this.player.currentTime = 0
           this.player.play()
           this.PLAY()
           break
         case "shuffle": {
-          // 随机播放
+          // 隨機播放
           const index = Math.floor(Math.random()*this.queue.length)
           this.SET_TRACK(index)
           if (index === this.queueIndex) {
@@ -369,7 +369,7 @@ export default {
           break
         }
         default:
-          // 顺序播放
+          // 順序播放
           if (this.queueIndex === this.queue.length - 1) {
             this.PAUSE()
           } else {
@@ -414,23 +414,23 @@ export default {
       const url = `/api/media/check-lrc/${fileHash}?token=${token}`;
 
       try {
-        // 首先向服务器查询是否有歌词
+        // 首先向伺服器查詢是否有歌詞
         const check_response = await this.$axios.get(url)
         if (!check_response.data.result) {
-          // 无lrc歌词，尝试去查询ai歌词
+          // 無lrc歌詞，嘗試去查詢ai歌詞
           await this.tryLoadRemoteAILyric()
           return;
         }
 
-        // 有lrc歌词文件
+        // 有lrc歌詞檔案
         this.lrcAvailable = true;
-        console.log('读入歌词');
+        console.log('讀入歌詞');
         const lrcUrl = `/api/media/stream/${check_response.data.hash}?token=${token}`;
         const lyricExtension = check_response.data.lyricExtension.toLowerCase();
 
-        // 开始下载具体的lrc内容
+        // 開始下載具體的lrc內容
         const response = await this.$axios.get(lrcUrl)
-        console.log('歌词读入成功');
+        console.log('歌詞讀入成功');
         console.log('srt convert to lrc');
         if (lyricExtension == ".srt" || lyricExtension == ".vtt") {
           response.data = convert_srt_vtt_to_lrc(response.data);
@@ -438,11 +438,11 @@ export default {
         this.lrcObj.setLyric(response.data);
         this.lrcContent = response.data;
         this.lrcObj.play(this.player.currentTime * 1000);
-        if (!this.playing) this.lrcObj.pause() // 加载歌词后，观察当前是否在播放音频，如果没有，则暂停歌词滚动
+        if (!this.playing) this.lrcObj.pause() // 載入歌詞後，觀察當前是否在播放音訊，如果沒有，則暫停歌詞滾動
         this.SET_HAS_LYRIC(true);
       } catch(error) {
         if (error.response) {
-          // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+          // 請求已發出，但伺服器響應的狀態碼不在 2xx 範圍內
           if (error.response.status !== 401) {
             console.error(error);
             this.showErrNotif(error.response.data.error || `${error.response.status} ${error.response.statusText}`);
@@ -456,7 +456,7 @@ export default {
     },
 
     resetToNoLyricStatus() {
-      // 无歌词文件
+      // 無歌詞檔案
       this.lrcAvailable = false;
       this.lrcObj.setLyric('');
       this.lrcContent = '';
@@ -470,25 +470,25 @@ export default {
       this.lrcObj.setLyric(lrcContent);
       this.lrcContent = lrcContent;
       this.lrcObj.play(this.player.currentTime * 1000);
-      if (!this.playing) this.lrcObj.pause() // 加载歌词后，观察当前是否在播放音频，如果没有，则暂停歌词滚动
+      if (!this.playing) this.lrcObj.pause() // 載入歌詞後，觀察當前是否在播放音訊，如果沒有，則暫停歌詞滾動
       this.SET_HAS_LYRIC(true);
     },
 
     async tryLoadRemoteAILyric() {
-      const workId = parseInt(this.currentPlayingFile.hash.replace(/\/.*/, "")); // 通过hash获取该文件对应的workId，返回number类型
+      const workId = parseInt(this.currentPlayingFile.hash.replace(/\/.*/, "")); // 通過hash獲取該檔案對應的workId，返回number型別
       const audioFileName = basenameWithoutExt(this.currentPlayingFile.title);
 
       let tasks = [];
-      let useLooseLyric = false; // 宽松的歌词匹配策略
+      let useLooseLyric = false; // 寬鬆的歌詞匹配策略
       try {
         do {
-          console.log("搜索ai歌词，第一阶段，严格匹配workId和文件title")
+          console.log("搜尋ai歌詞，第一階段，嚴格匹配workId和檔案title")
           tasks = await ServerApi.searchWorkTask(workId, audioFileName);
           tasks = tasks.filter(t => t.status == AILyricTaskStatus.SUCCESS)
           useLooseLyric = false;
           if (tasks.length >= 1) break;
 
-          console.log("搜索ai歌词，第二阶段，查找workId作品内所有歌词")
+          console.log("搜尋ai歌詞，第二階段，查詢workId作品內所有歌詞")
           tasks = await ServerApi.searchWorkTask(workId);
           tasks = tasks.filter((t) => t.status == AILyricTaskStatus.SUCCESS && audioLyricNameMatch(audioFileName, t.fileName))
           useLooseLyric = true;
@@ -498,20 +498,20 @@ export default {
         } while(0);
 
       } catch(e) {
-        console.log("查找ai歌词失败: ", e)
+        console.log("查詢ai歌詞失敗: ", e)
       }
 
       if (tasks.length >= 1) {
-        console.log(`  已找到ai歌词记录${tasks.length}个`)
+        console.log(`  已找到ai歌詞記錄${tasks.length}個`)
         
-        console.log(`  加载第一个歌词记录，id = ${tasks[0].id}`)
+        console.log(`  載入第一個歌詞記錄，id = ${tasks[0].id}`)
         await this.loadRemoteAILyricTaskId(tasks[0].id)
         if (useLooseLyric) {
-          this.$q.notify({message: "使用宽松的歌词匹配策略", timeout: 2000})
+          this.$q.notify({message: "使用寬鬆的歌詞匹配策略", timeout: 2000})
         }
       } else {
-        console.warn("没有找到ai歌词")
-        this.resetToNoLyricStatus(); // 没有找到ai歌词的话，则必然先没有本地歌词，清空歌词状态
+        console.warn("沒有找到ai歌詞")
+        this.resetToNoLyricStatus(); // 沒有找到ai歌詞的話，則必然先沒有本地歌詞，清空歌詞狀態
       }
     },
 
@@ -528,8 +528,8 @@ export default {
             // artwork: this.visualPlayerCoverUrl,
             artwork: [
               // {
-              //   src: this.genCoverUrl(this.playWorkId, "visualPlayerCover"), // 图像太大，safari上有时会出现加载失败的问题
-              //   sizes: "600x600", // 随便写的尺寸
+              //   src: this.genCoverUrl(this.playWorkId, "visualPlayerCover"), // 影像太大，safari上有時會出現載入失敗的問題
+              //   sizes: "600x600", // 隨便寫的尺寸
               //   type: "image/jpg",
               // },
               {
@@ -556,7 +556,7 @@ export default {
     },
 
     // type: in 'visualPlayerCover', 'main', 'sam', '240x240', # warning '360x360' is almost not exist in dlsite, do not use 360x360
-    // 'visualPlayerCover' 默认是 'main'，如果用户有手动设置过可视化封面的话，则使用用户设置过的那个图片
+    // 'visualPlayerCover' 預設是 'main'，如果使用者有手動設定過視覺化封面的話，則使用使用者設定過的那個圖片
     genCoverUrl(workId, type) {
       const token = this.$q.localStorage.getItem('jwt-token') || ''
 
@@ -583,7 +583,7 @@ export default {
         this.isChangingCurrentTime = true;
         this.changeCurrentTime = this.currentTime;
       } else {
-        // 延时一下，避免音频状态的值立即被更新到slider上
+        // 延時一下，避免音訊狀態的值立即被更新到slider上
         setTimeout(() => {
           this.isChangingCurrentTime = false;
         }, 100);
@@ -621,7 +621,7 @@ export default {
       document.addEventListener('click', initAudio);
       if (this.$q.platform.is.safari && this.$q.platform.is.mobile) {
         this.$q.notify({
-          message: "监测到safari平台上开启了音频可视化功能，注意移动端safari有bug，如果没有声音的话，请关闭音频可视化功能",
+          message: "監測到safari平臺上開啟了音訊視覺化功能，注意移動端safari有bug，如果沒有聲音的話，請關閉音訊視覺化功能",
           timeout: 5000
         })
       }

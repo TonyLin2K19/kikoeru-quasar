@@ -11,15 +11,15 @@
             toggle-color="primary"
             class="text-bold outline-style"
             :options="[
-              {label: '播放历史', value: 'histroy'},
-              {label: '我的评价', value: 'review'},
-              {label: '我的进度', value: 'progress'},
-              {label: '分类整理', value: 'folder'},
+              {label: '播放歷史', value: 'histroy'},
+              {label: '我的評價', value: 'review'},
+              {label: '我的進度', value: 'progress'},
+              {label: '分類整理', value: 'folder'},
             ]"
           />
       </div>
 
-      <!-- 排序选项 -->
+      <!-- 排序選項 -->
       <div v-if="mode != 'histroy'" class="col-auto row q-pt-md">
         <q-select dense rounded outlined v-model="sortBy" :options="sortOptions"/>
         <q-btn
@@ -35,7 +35,7 @@
       </div>
     </div>
 
-    <!-- 进度选项，仅在我的进度tab选项中显示-->
+    <!-- 進度選項，僅在我的進度tab選項中顯示-->
     <div
       v-if="mode === 'progress'"
       class="q-px-sm q-pt-md"
@@ -47,11 +47,11 @@
         rounded
         class="outline-style"
         :options="[
-          {label: '想听', value: 'marked'},
-          {label: '在听', value: 'listening'},
-          {label: '听过', value: 'listened'},
-          {label: '重听', value: 'replay'},
-          {label: '搁置', value: 'postponed'}
+          {label: '想聽', value: 'marked'},
+          {label: '在聽', value: 'listening'},
+          {label: '聽過', value: 'listened'},
+          {label: '重聽', value: 'replay'},
+          {label: '擱置', value: 'postponed'}
         ]"
       />
     </div>
@@ -60,7 +60,7 @@
     <div>
       <div class="q-px-sm q-pt-md">
         <q-infinite-scroll @load="onLoad" :offset="500" :disable="stopLoad" ref="scroll" v-if="mode !=='folder'">
-          <div class="row justify-center text-grey" v-if="works.length === 0">在作品界面上点击星标、标记进度，标记的音声就会出现在这里啦</div>
+          <div class="row justify-center text-grey" v-if="works.length === 0">在作品介面上點選星標、標記進度，標記的音聲就會出現在這裡啦</div>
           <q-list bordered separator class="shadow-2" v-if="works.length">
              <FavListItem v-for="work in works" :key="work.id" :workid="work.id" :metadata="work" @reset="reset()" :mode="mode"></FavListItem> 
           </q-list>
@@ -71,7 +71,7 @@
           </template>
         </q-infinite-scroll>
 
-        <div v-else class="row justify-center text-grey">尚未实现，敬请期待</div>
+        <div v-else class="row justify-center text-grey">尚未實現，敬請期待</div>
       </div>
     </div>
   </q-page>
@@ -120,32 +120,32 @@ export default {
       pagination: { currentPage:0, pageSize:12, totalCount:0 },
       sortMode: 'desc',
       sortBy: {
-          label: '标记时间',
+          label: '標記時間',
           order: 'updated_at'
         },
       sortOptions: [
         {
-          label: '标记时间',
+          label: '標記時間',
           order: 'updated_at'
         },
         {
-          label: '评价',
+          label: '評價',
           order: 'userRating'
         },
         {
-          label: '发布时间',
+          label: '釋出時間',
           order: 'release'
         },
         {
-          label: '评论数量',
+          label: '評論數量',
           order: 'review_count'
         },
         {
-          label: '售出数量',
+          label: '售出數量',
           order: 'dl_count'
         },
         {
-          label: '全年龄新作',
+          label: '全年齡新作',
           order: 'allage'
         },
         {
@@ -264,7 +264,7 @@ export default {
         })
         .catch((error) => {
           if (error.response) {
-            // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+            // 請求已發出，但伺服器響應的狀態碼不在 2xx 範圍內
             if (error.response.status !== 401) {
               this.showErrNotif(error.response.data.error || `${error.response.status} ${error.response.statusText}`)
             }

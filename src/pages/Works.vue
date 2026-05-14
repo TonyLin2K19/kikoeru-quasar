@@ -1,19 +1,19 @@
 <template>
   <div>
-    <!--没有搜索的情况下，显示最近播放作品-->
+    <!--沒有搜尋的情況下，顯示最近播放作品-->
     <RecentWorks v-if="!isAdvanceSearch && searchMetas.length == 0" />
 
     <!--
-      TODO: 当前版本的quasar的input在iOSsafari中输入中文时有bug，
-      拼音也会被更新到data中，看了一下quasar官网的demo是没有这个问题的（版本不明），
-      用原生的input组件也没有问题，应该是这个项目里quasar版本太老，有些bug，
-      以后升级quasar版本试试能不能解决这个问题
+      TODO: 當前版本的quasar的input在iOSsafari中輸入中文時有bug，
+      拼音也會被更新到data中，看了一下quasar官網的demo是沒有這個問題的（版本不明），
+      用原生的input元件也沒有問題，應該是這個專案裡quasar版本太老，有些bug，
+      以後升級quasar版本試試能不能解決這個問題
     -->
     <div v-if="isAdvanceSearch" class="q-pa-md q-full-width">
       <q-input
         outlined
         autofocus
-        label="关键字搜索"
+        label="關鍵字搜尋"
         :hint="advanceSearchBarHint"
         v-model="editKeyword"
         @keyup.enter="onAddAdvanceSearchKeyword"
@@ -29,7 +29,7 @@
         {{pageTitle}}
         <q-badge color="secondary" floating>{{pagination.totalCount}}</q-badge>
       </span>
-      <div v-if="isAdvanceSearch"><!--高级搜索模式的多关键字展示-->
+      <div v-if="isAdvanceSearch"><!--高階搜尋模式的多關鍵字展示-->
         <q-badge class="q-ma-xs" v-for="meta,index in advanceSearchKeywords" :key="meta.t+meta.d">
           {{ meta.d }}
           <q-btn
@@ -43,13 +43,13 @@
           />
         </q-badge>
       </div>
-      <div v-else> <!--普通搜索模式的信息展示-->
+      <div v-else> <!--普通搜尋模式的資訊展示-->
         <q-badge class="q-ma-xs" v-for="meta, index in searchMetas" :key="meta">{{ index == 0 ? "":"," }} {{ meta }}</q-badge>
       </div>
     </div>
 
     <div class="row justify-between q-mb-md q-mx-sm">
-      <!-- 排序属性 -->
+      <!-- 排序屬性 -->
       <q-select
         dense
         rounded
@@ -60,11 +60,11 @@
         v-model="sortCategoryOption"
         :options="sortCategoryOptions"
         :option-label="humanReadableLabel"
-        label="排序属性"
+        label="排序屬性"
         class="col-auto"
       />
 
-      <!-- 年龄分级 -->
+      <!-- 年齡分級 -->
       <q-select
         dense
         rounded
@@ -75,11 +75,11 @@
         v-model="nsfwOption"
         :options="nsfwOptions"
         :option-label="humanReadableLabel"
-        label="年龄分级"
+        label="年齡分級"
         class="col-auto"
       />
 
-      <!-- 字幕筛选 -->
+      <!-- 字幕篩選 -->
       <q-select
         dense
         rounded
@@ -91,16 +91,16 @@
         v-model="lyricOption"
         :options="lyricOptions"
         :option-label="humanReadableLabel"
-        label="字幕筛选"
+        label="字幕篩選"
         clearable
         multiple
         class="col-auto"
       />
 
-      <!-- 排序顺序 -->
+      <!-- 排序順序 -->
       <q-toggle v-model="sortInDesc" :label="sortInDesc ? '降序' : '升序'" />
 
-      <!-- 切换显示模式按钮 -->
+      <!-- 切換顯示模式按鈕 -->
       <q-btn-toggle
         dense
         spread
@@ -161,7 +161,7 @@
           <WorkListItem v-for="work in works" :key="work.id" :metadata="work" :showLabel="showLabel && $q.screen.width > 700" />
         </q-list>
 
-        <!--旧式的workCard展示-->
+        <!--舊式的workCard展示-->
         <div v-if="oldWorkCardUIStyle" class="row q-col-gutter-x-md q-col-gutter-y-lg">
           <div class="col-xs-12 col-sm-6 col-md-4" v-for="work in works" :key="work.id"
             :class="detailMode ? 'col-lg-3 col-xl-2': 'col-lg-2 col-xl-2'"
@@ -170,7 +170,7 @@
           </div>
         </div>
 
-        <!--解决android平台hover事件不像safari那样及时响应的问题，需要手动添加触摸响应时间-->
+        <!--解決android平臺hover事件不像safari那樣及時響應的問題，需要手動新增觸控響應時間-->
         <div v-else-if="$q.platform.is.android && $q.platform.has.touch" class="row q-col-gutter-x-md q-col-gutter-y-lg">
           <div class="col-xs-12 col-sm-6 col-md-4" v-for="work in works" :key="work.id"
             @touchstart="()=>onWorkCardTouch(work.id)"
@@ -191,7 +191,7 @@
           </div>
         </div>
 
-        <div v-show="stopLoad" class="q-mt-lg q-mb-xl text-h6 text-bold text-center">无更多作品</div>
+        <div v-show="stopLoad" class="q-mt-lg q-mb-xl text-h6 text-bold text-center">無更多作品</div>
 
         <template v-slot:loading>
           <div class="row justify-center q-my-md">
@@ -237,29 +237,29 @@ export default {
       pagination: { currentPage:0, pageSize:12, totalCount:0 },
       seed: 7, // random sort
 
-      // 排序种类，例如可以选择按照发售日期来排序结果
+      // 排序種類，例如可以選擇按照發售日期來排序結果
       sortCategoryOption: "release",
       sortCategoryOptions: ["release", "rating", "dl_count", "price", "rate_average_2dp", "review_count", "id", "created_at", "random"],
 
       nsfwOption: "nsfw_0", 
-      nsfwOptions: ["nsfw_0", "nsfw_1", "nsfw_2"], // nsfw_0无年龄限制，nsfw_1全年龄，nsfw_2十八禁
+      nsfwOptions: ["nsfw_0", "nsfw_1", "nsfw_2"], // nsfw_0無年齡限制，nsfw_1全年齡，nsfw_2十八禁
 
-      lyricOption: [], // 注意，这个选项可多选，但是clear的时候，quasar可能会将其设置为null，需要特别注意
+      lyricOption: [], // 注意，這個選項可多選，但是clear的時候，quasar可能會將其設定為null，需要特別注意
       lyricOptions: ["lyric_local", "lyric_ai"],
 
-      // 排序顺序，true表示降序，false表示升序
+      // 排序順序，true表示降序，false表示升序
       sortInDesc: true,
 
-      touchedWorkId: 0, // 用来解决android移动端设备没有hover事件导致workCard不能跟随手指显示标签的问题
+      touchedWorkId: 0, // 用來解決android移動端裝置沒有hover事件導致workCard不能跟隨手指顯示標籤的問題
 
       /*
         advanceSearchKeywords
         [
-          {t: 1, d: "異世界"}, // 模糊匹配，目前只实现这一个
-          {t: 2, d: "恋鈴桃歌"}, // 声优匹配，实际搜索字段在前端就要变成id
-          {t: 3, d: "环绕音"}, // 标签匹配，实际搜索字段在前端就要变成id
-          {t: 3, d: "治愈"}, // 标签匹配，实际搜索字段在前端就要变成id
-          {t: 4, d: "Delivery Voice"}, // 社团匹配，实际搜索字段在前端就要变成id
+          {t: 1, d: "異世界"}, // 模糊匹配，目前只實現這一個
+          {t: 2, d: "戀鈴桃歌"}, // 聲優匹配，實際搜尋欄位在前端就要變成id
+          {t: 3, d: "環繞音"}, // 標籤匹配，實際搜尋欄位在前端就要變成id
+          {t: 3, d: "治癒"}, // 標籤匹配，實際搜尋欄位在前端就要變成id
+          {t: 4, d: "Delivery Voice"}, // 社團匹配，實際搜尋欄位在前端就要變成id
         ]
       */
       editKeyword: "",
@@ -320,8 +320,8 @@ export default {
     },
 
     advanceSearchBarHint() {
-      if (this.editKeyword === "") return "模糊关键字，可搜索作品名、声优名、标签名、社团名"
-      else return "按回车或者右侧加号添加"
+      if (this.editKeyword === "") return "模糊關鍵字，可搜尋作品名、聲優名、標籤名、社團名"
+      else return "按回車或者右側加號新增"
     },
 
     ...mapState('AudioPlayer', [
@@ -384,9 +384,9 @@ export default {
 
     '$route.name': {
       handler: function() {
-        // 高级搜索模式通过route.name进行判断，因此当这个属性变化的时候，需要及时更新状态，
-        // 否则会出现url跳转到聚合搜索页面后，页面没有更新的问题，
-        // 因为被vue复用组件了，需要重新检查一遍
+        // 高階搜尋模式通過route.name進行判斷，因此當這個屬性變化的時候，需要及時更新狀態，
+        // 否則會出現url跳轉到聚合搜尋頁面後，頁面沒有更新的問題，
+        // 因為被vue複用元件了，需要重新檢查一遍
         this.checkAdvanceSearchMode()
       },
       deep: true,
@@ -433,7 +433,7 @@ export default {
         })
         .catch((error) => {
           if (error.response) {
-            // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+            // 請求已發出，但伺服器響應的狀態碼不在 2xx 範圍內
             if (error.response.status !== 401) {
               this.showErrNotif(error.response.data.error || `${error.response.status} ${error.response.statusText}`)
             }
@@ -465,13 +465,13 @@ export default {
 
             switch (restrict) {
               case 'tags':
-                pageTitle = '搜索标签：'
+                pageTitle = '搜尋標籤：'
                 break
               case 'vas':
-                pageTitle = '搜索声优：'
+                pageTitle = '搜尋聲優：'
                 break
               case 'circles':
-                pageTitle = '社团作品：'
+                pageTitle = '社團作品：'
                 break
             }
             // pageTitle += name || ''
@@ -480,7 +480,7 @@ export default {
           })
           .catch((error) => {
             if (error.response) {
-              // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+              // 請求已發出，但伺服器響應的狀態碼不在 2xx 範圍內
               if (error.response.status !== 401) {
                 this.showErrNotif(error.response.data.error || `${error.response.status} ${error.response.statusText}`)
               }
@@ -489,10 +489,10 @@ export default {
             }
           })
       } else if (this.$route.query.keyword) {
-        this.pageTitle = '搜索关键字：';
+        this.pageTitle = '搜尋關鍵字：';
         this.searchMetas = [this.$route.query.keyword];
       } else if (this.isAdvanceSearch) {
-        this.pageTitle = '聚合搜索：'
+        this.pageTitle = '聚合搜尋：'
 
       } else {
         this.pageTitle = '所有作品'
@@ -511,25 +511,25 @@ export default {
         })
     },
 
-    // 将一些标签名称转换成可阅读的文字
-    // 例如排序属性中，有release作为标记，release通常用来直接传递给服务器，
-    // 通过这个函数可以将release转换成更加可阅读的文字标签“发售日期”
+    // 將一些標籤名稱轉換成可閱讀的文字
+    // 例如排序屬性中，有release作為標記，release通常用來直接傳遞給伺服器，
+    // 通過這個函式可以將release轉換成更加可閱讀的文字標籤“發售日期”
     humanReadableLabel(label) {
       switch(label) {
-        case "release": return "发售日期";
-        case "rating": return "我的评价";
-        case "dl_count": return "售出数量";
-        case "price": return "售出价格";
-        case "rate_average_2dp": return "听众评分";
-        case "review_count": return "评论数量";
-        case "id": return "作品番号";
-        case "created_at": return "添加时间";
-        case "random": return "随机排序";
-        case "nsfw_0": return "所有分级";
-        case "nsfw_1": return "全年龄";
+        case "release": return "發售日期";
+        case "rating": return "我的評價";
+        case "dl_count": return "售出數量";
+        case "price": return "售出價格";
+        case "rate_average_2dp": return "聽眾評分";
+        case "review_count": return "評論數量";
+        case "id": return "作品番號";
+        case "created_at": return "新增時間";
+        case "random": return "隨機排序";
+        case "nsfw_0": return "所有分級";
+        case "nsfw_1": return "全年齡";
         case "nsfw_2": return "十八禁";
-        case "lyric_local": return "本地歌词";
-        case "lyric_ai": return "AI歌词";
+        case "lyric_local": return "本地歌詞";
+        case "lyric_ai": return "AI歌詞";
         default: return label;
       }
     },
@@ -546,13 +546,13 @@ export default {
     onAddAdvanceSearchKeyword() {
       const keyword = this.editKeyword.trim()
       if (keyword === "") {
-        this.showErrNotif("无法添加空白的关键字");
+        this.showErrNotif("無法新增空白的關鍵字");
         return;
       }
 
       for (let kw of this.advanceSearchKeywords) {
         if (kw.t == AdvanceSearchCondType.FUZZY && kw.d == keyword) {
-          this.showErrNotif("关键字重复，添加失败");
+          this.showErrNotif("關鍵字重複，新增失敗");
           return;
         }
       }
@@ -576,14 +576,14 @@ export default {
 
 <style lang="scss" scoped>
   .list {
-    // 宽度 >= $breakpoint-sm-min
+    // 寬度 >= $breakpoint-sm-min
     @media (min-width: $breakpoint-sm-min) {
       padding: 0px 20px;
     }
   }
 
   .work-card {
-    // 宽度 > $breakpoint-xl-min
+    // 寬度 > $breakpoint-xl-min
     @media (min-width: $breakpoint-md-min) {
       width: 560px;
     }

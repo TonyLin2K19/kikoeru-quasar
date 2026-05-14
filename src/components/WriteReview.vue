@@ -3,7 +3,7 @@
       <q-dialog v-model="showReviewDialog" @hide="closeDialog">
         <q-card>
           <q-card-section class="q-pb-sm">
-            <div class="text-body1">我的评论</div>
+            <div class="text-body1">我的評論</div>
           </q-card-section>
 
           <q-card-section class="q-pt-none">
@@ -27,11 +27,11 @@
               color="white"
               text-color="primary"
               :options="[
-                {label: '想听', value: 'marked'},
-                {label: '在听', value: 'listening'},
-                {label: '听过', value: 'listened'},
-                {label: '重听', value: 'replay'},
-                {label: '搁置', value: 'postponed'}
+                {label: '想聽', value: 'marked'},
+                {label: '在聽', value: 'listening'},
+                {label: '聽過', value: 'listened'},
+                {label: '重聽', value: 'replay'},
+                {label: '擱置', value: 'postponed'}
               ]"
             />
           </q-card-section>
@@ -48,11 +48,11 @@
           
           <div class="row justify-between">
             <q-card-actions  class="text-red">
-              <q-btn flat label="删除标记" v-close-popup @click="deleteConfirm = true" />
+              <q-btn flat label="刪除標記" v-close-popup @click="deleteConfirm = true" />
             </q-card-actions>
 
             <q-card-actions align="right" class="text-primary">
-              <q-btn flat label="确定" v-close-popup @click="submitReview()" />
+              <q-btn flat label="確定" v-close-popup @click="submitReview()" />
               <q-btn flat label="取消" v-close-popup @click="closeDialog()" />
             </q-card-actions>
           </div>
@@ -62,11 +62,11 @@
       <q-dialog v-model="deleteConfirm" persistent transition-show="scale" transition-hide="scale">
         <q-card class="bg-teal text-white" style="width: 300px">
           <q-card-section>
-            <div class="text-h6">确定要删除标记吗</div>
+            <div class="text-h6">確定要刪除標記嗎</div>
           </q-card-section>
 
           <q-card-actions align="right" class="text-teal">
-              <q-btn flat label="确定" v-close-popup @click="deleteReview()" />
+              <q-btn flat label="確定" v-close-popup @click="deleteReview()" />
               <q-btn flat label="取消" v-close-popup @click="closeDialog()"/>
           </q-card-actions>
         </q-card>
@@ -127,7 +127,7 @@ export default {
 
     reviewPayload () {
       const submitPayload = {
-        'user_name': this.$store.state.User.name, // 用户名不会被后端使用
+        'user_name': this.$store.state.User.name, // 使用者名稱不會被後端使用
         'work_id': this.workid,
         'rating': this.rating,
         'review_text': this.reviewText,
@@ -144,13 +144,13 @@ export default {
       this.$axios.put('/api/review', payload, {params})
         .then((response) => {
           this.modified =true
-          // TODO 修复callback graph
+          // TODO 修復callback graph
             this.showSuccNotif(response.data.message)
         })
         .then(()=> this.closeDialog())
         .catch((error) => {
           if (error.response) {
-            // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+            // 請求已發出，但伺服器響應的狀態碼不在 2xx 範圍內
             this.showErrNotif(error.response.data.error || `${error.response.status} ${error.response.statusText}`)
           } else {
             this.showErrNotif(error.message || error)
@@ -170,7 +170,7 @@ export default {
         .then(() => this.closeDialog())
         .catch((error) => {
           if (error.response) {
-            // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+            // 請求已發出，但伺服器響應的狀態碼不在 2xx 範圍內
             this.showErrNotif(error.response.data.error || `${error.response.status} ${error.response.statusText}`)
           } else {
             this.showErrNotif(error.message || error)

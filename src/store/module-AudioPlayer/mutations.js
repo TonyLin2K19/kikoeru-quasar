@@ -54,8 +54,8 @@ const mutations = {
     }
 
     const workId = payload.workId
-    // 设置workId，然后配置封面，从浏览器本地Storage查找是否曾经手动配置过封面，
-    // 如果没有则使用默认的封面路径
+    // 設定workId，然後配置封面，從瀏覽器本地Storage查詢是否曾經手動配置過封面，
+    // 如果沒有則使用預設的封面路徑
     if (workId !== state.playWorkId) {
       const localStorageName = `visual_cover_${workId}`
       let coverUrl = LocalStorage.getItem(localStorageName)

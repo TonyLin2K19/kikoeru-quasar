@@ -11,10 +11,10 @@
         :class="{showStyle: showAudioPlayer, hideStyle: !showAudioPlayer}"
         :style="{'--cover-url': `url(${coverUrl})`}"
       >
-        <!--顶部小横条-->
+        <!--頂部小橫條-->
         <div class="pull-handler" @click="toggleHide" v-touch-swipe.mouse.down="toggleHide"></div>
 
-        <!-- 音声封面 -->
+        <!-- 音聲封面 -->
         <div class="row items-center albumart q-mt-lg q-pa-sm relative-position flippable-cover-container non-selectable"
           v-touch-swipe.mouse="onCoverSwipe"
         >
@@ -46,9 +46,9 @@
 
         </div>
 
-        <!-- 设置菜单 -->
+        <!-- 設定選單 -->
         <div class="row justify-between q-mr-sm q-my-sm">
-          <!-- 顶在前面 -->
+          <!-- 頂在前面 -->
             <!-- 曲目列表 -->
             <q-btn 
               flat 
@@ -59,11 +59,11 @@
               @click="showCurrentPlayList = !showCurrentPlayList" 
             >
               <q-tooltip anchor="top middle" self="bottom middle">
-                切换曲目
+                切換曲目
               </q-tooltip>
             </q-btn>
 
-            <!--视频画中画-->
+            <!--影片畫中畫-->
             <q-btn 
               v-if="enableVideoSource && isCurrentPlayingFileVideo" 
               dense 
@@ -75,11 +75,11 @@
               @click="onSetEnableVideoSourcePIP(!enableVideoSourcePIP)" 
             >
             <q-tooltip anchor="top middle" self="bottom middle">
-              视频画中画
+              影片畫中畫
             </q-tooltip>
             </q-btn>
 
-            <!--画中画歌词-->
+            <!--畫中畫歌詞-->
             <q-btn 
               v-if="hasLyric || enablePIPLyrics" 
               dense 
@@ -91,11 +91,11 @@
               @click="setPIPLyrics" 
             >
               <q-tooltip anchor="top middle" self="bottom middle">
-                桌面歌词
+                桌面歌詞
               </q-tooltip>
             </q-btn>
 
-            <!--播放顺序切换-->
+            <!--播放順序切換-->
             <q-btn 
               flat 
               dense 
@@ -109,7 +109,7 @@
               </q-tooltip>
             </q-btn>
 
-            <!--大屏幕-->
+            <!--大螢幕-->
             <q-btn 
               flat 
               dense 
@@ -119,7 +119,7 @@
               @click="gotoFullScreenPlayer"
             >
               <q-tooltip anchor="top middle" self="bottom middle">
-                网页全屏
+                網頁全屏
               </q-tooltip>
             </q-btn>
 
@@ -147,7 +147,7 @@
               icon="more_horiz"
             >
               <q-tooltip anchor="top middle" self="bottom middle">
-                更多播放设置
+                更多播放設定
               </q-tooltip>
               <q-menu anchor="bottom right" self="top right">
                 <q-item clickable v-ripple @click="hideSeekButton = !hideSeekButton">
@@ -156,7 +156,7 @@
                   </q-item-section>
 
                   <q-item-section>
-                    隐藏封面按钮
+                    隱藏封面按鈕
                   </q-item-section>
                 </q-item>
                 
@@ -165,7 +165,7 @@
                     <q-icon :name="swapSeekButton ? 'done' : ''" />
                   </q-item-section>
                   <q-item-section>
-                    交换进度按钮与切换按钮
+                    交換進度按鈕與切換按鈕
                   </q-item-section>
                 </q-item>
                 
@@ -174,7 +174,7 @@
                     <!-- placeholder -->
                   </q-item-section>
                   <q-item-section>
-                    打开作品详情（或双击封面）
+                    開啟作品詳情（或雙擊封面）
                   </q-item-section>
                 </q-item>
                 
@@ -183,7 +183,7 @@
                     <q-icon :name="enableVisualizer ? 'done' : ''" />
                   </q-item-section>
                   <q-item-section>
-                    开启音频可视化（需要刷新页面）
+                    開啟音訊視覺化（需要重新整理頁面）
                   </q-item-section>
                 </q-item>
                 
@@ -192,7 +192,7 @@
                     <q-icon :name="enableVideoSource ? 'done' : ''" />
                   </q-item-section>
                   <q-item-section>
-                    视频源绘制功能（需要刷新页面）
+                    影片源繪製功能（需要重新整理頁面）
                   </q-item-section>
                 </q-item>
 
@@ -203,7 +203,7 @@
                       :value="lyricOffsetSeconds"
                       @input="lyricOffsetChange"
                       type="number"
-                      prefix="歌词偏移"
+                      prefix="歌詞偏移"
                       suffix="s"
                       style="max-width: 100%;"
                       outlined
@@ -234,7 +234,7 @@
             </q-btn>
         </div>
 
-        <!-- 进度条控件 -->
+        <!-- 進度條控制元件 -->
         <div class="row items-center q-mx-sm q-mb-sm non-selectable">
           <div class="col-auto relative-position">{{ formatSeconds(currentTime) }}</div>
           <AudioElement class="col" />
@@ -244,7 +244,7 @@
         <!-- Place holder for iOS -->
         <div style="height: 5px" v-if="$q.platform.is.ios" />
 
-        <!-- 标题 -->
+        <!-- 標題 -->
         <div class="column text-center non-selectable ">
           <Scrollable class="full-width" :stop="hide" name="audioTitle">
             <span class="audio-name relative-position q-px-md">{{ currentPlayingFile.title }}</span>
@@ -257,7 +257,7 @@
         <!-- Place holder for iOS -->
         <div  style="height: 10px" v-if="$q.platform.is.ios" />
 
-        <!-- 播放按钮控件 -->
+        <!-- 播放按鈕控制元件 -->
         <div class="row justify-around" style="height: 65px">
           <q-btn flat dense class="col-auto" size="lg"   icon="skip_previous" @click="previousTrack()" style="width: 55px" />
           <q-btn flat dense class="col-auto" size="lg"   :icon="rewindIcon" @click="rewind(true)" style="width: 55px" />
@@ -266,7 +266,7 @@
           <q-btn flat dense class="col-auto" size="lg"   icon="skip_next" @click="nextTrack()" style="width: 55px" />
         </div>
 
-        <!-- 音量控件 -->
+        <!-- 音量控制元件 -->
         <!-- HTML5 volume in iOS is read-only -->
         <div class="row items-center q-mx-lg" style="height: 50px" v-if="!$q.platform.is.ios">
           <q-icon name="volume_down" size="sm" class="col-auto" />
@@ -276,10 +276,10 @@
       </q-card>
     </div>
 
-    <!-- 当前播放列表 -->
+    <!-- 當前播放列表 -->
     <q-dialog v-model="showCurrentPlayList">
       <q-card class="current-play-list">
-        <!-- 操作当前播放列表的控制按钮 -->
+        <!-- 操作當前播放列表的控制按鈕 -->
         <div class="row" style="padding: 5px; height: 45px;">
           <q-btn dense round size="md" icon="edit" color="primary" @click="editCurrentPlayList = !editCurrentPlayList" style="height: 35px; width: 35px;" class="col-auto" />
           <q-btn dense round size="md" icon="save" color="teal" style="height: 35px; width: 35px;" class="col-auto q-mx-sm" />
@@ -289,7 +289,7 @@
         
         <q-separator />
 
-        <!-- 音频文件列表 -->
+        <!-- 音訊檔案列表 -->
         <q-list style="max-height: 450px" class="scroll">
           <draggable
             handle=".handle"
@@ -332,29 +332,29 @@
     <q-dialog v-model="lyricSyncDialog"  seamless position="top">
       <q-card class="bg-primary text-white">
         <q-card-section>
-          <div class="text-h6">歌词同步辅助工具</div>
+          <div class="text-h6">歌詞同步輔助工具</div>
         </q-card-section>
 
         <q-card-section class="q-pt-none">
-          这是一个辅助计算歌词偏移量的工具，当音频和歌词的时间出现不同步的时候，使用此工具来计算修复的歌词偏移量。
-          请在正常播放状态下播放音频和歌词，从声音和歌词中找到一个关键点A，对应声音A和歌词A，
-          判断先听到声音还是先看到歌词，当其中一个出现时，点击下方对应的按钮，接着在另一个元素出现时再次点击一次按钮。
-          这里将会计算两次点击之间的时间差，点击“应用偏移量”即可立即刚才两次点击的时间差作为歌词偏移量。
+          這是一個輔助計算歌詞偏移量的工具，當音訊和歌詞的時間出現不同步的時候，使用此工具來計算修復的歌詞偏移量。
+          請在正常播放狀態下播放音訊和歌詞，從聲音和歌詞中找到一個關鍵點A，對應聲音A和歌詞A，
+          判斷先聽到聲音還是先看到歌詞，當其中一個出現時，點選下方對應的按鈕，接著在另一個元素出現時再次點選一次按鈕。
+          這裡將會計算兩次點選之間的時間差，點選“應用偏移量”即可立即剛才兩次點選的時間差作為歌詞偏移量。
         </q-card-section>
 
         <q-card-section v-if="fixState === 'ready'">
-          <q-btn @click="startFixLyricSync('lyric')">歌词先出现了</q-btn>
-          <q-btn @click="startFixLyricSync('audio')">先听到了声音</q-btn>
+          <q-btn @click="startFixLyricSync('lyric')">歌詞先出現了</q-btn>
+          <q-btn @click="startFixLyricSync('audio')">先聽到了聲音</q-btn>
         </q-card-section>
 
         <q-card-section v-if="fixState === 'measure'">
-          <q-btn @click="stopFixLyricSync">{{ fixWhoStartFirst == "audio" ? "歌词这个时候出现了" : "这个时候才听到了声音" }}</q-btn>
+          <q-btn @click="stopFixLyricSync">{{ fixWhoStartFirst == "audio" ? "歌詞這個時候出現了" : "這個時候才聽到了聲音" }}</q-btn>
         </q-card-section>
 
         <q-card-actions align="right">
-          <q-btn @click="lyricSyncDialog = false">关闭</q-btn>
-          <q-btn v-if="fixState !== 'ready'" @click="fixState = 'ready'" >重新计量偏移量</q-btn>
-          <q-btn v-if="fixState === 'done'" @click="fixApply">应用偏移量 {{ showDeltaSeconds }}</q-btn>
+          <q-btn @click="lyricSyncDialog = false">關閉</q-btn>
+          <q-btn v-if="fixState !== 'ready'" @click="fixState = 'ready'" >重新計量偏移量</q-btn>
+          <q-btn v-if="fixState === 'done'" @click="fixApply">應用偏移量 {{ showDeltaSeconds }}</q-btn>
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -388,14 +388,14 @@ export default {
       hideSeekButton: false,
       isAndroid: navigator.userAgent.toLowerCase().indexOf('android') > -1,
       histroyCheckIntervalId: -1,
-      latestUpdatedHistory: null, // 记录最近一次更新的历史记录，防止反复对同一个播放历史进行远程数据更新
+      latestUpdatedHistory: null, // 記錄最近一次更新的歷史記錄，防止反覆對同一個播放歷史進行遠端資料更新
 
-      isFlipCover: false, // 是否反转封面显示其他内容
+      isFlipCover: false, // 是否反轉封面顯示其他內容
 
-      // 歌词偏移量修复工具
+      // 歌詞偏移量修復工具
       lyricSyncDialog: false,
-      fixState: "ready",  // ready: 准备开始, measure: 计时进行中, done: 计时完成
-      fixWhoStartFirst: "", // "audio", "lyric" // 先看到的歌词，还是先听到的声音
+      fixState: "ready",  // ready: 準備開始, measure: 計時進行中, done: 計時完成
+      fixWhoStartFirst: "", // "audio", "lyric" // 先看到的歌詞，還是先聽到的聲音
       fixStartMills: 0,
       fixStopMills: 0,
     }
@@ -407,7 +407,7 @@ export default {
     }
     this.histroyCheckIntervalId = setInterval(() => {
       this.onUpdatePlayingStatus()
-    }, 60 * 1000) // 每隔一段时间更新一次播放记录
+    }, 60 * 1000) // 每隔一段時間更新一次播放記錄
 
     if (this.$q.platform.is.desktop) {
       window.addEventListener('keydown', this.onKeyDown);
@@ -420,31 +420,31 @@ export default {
     }
     clearInterval(this.histroyCheckIntervalId)
 
-    // 原本是想要在关闭窗口时，更新最后一次播放历史
-    // 但是实际测试下来，关闭窗口时根本没有来得及发送最后一次更新消息，于是放弃这个方案
+    // 原本是想要在關閉視窗時，更新最後一次播放歷史
+    // 但是實際測試下來，關閉視窗時根本沒有來得及傳送最後一次更新訊息，於是放棄這個方案
     // this.onUpdatePlayingStatus()
   },
 
   watch: {
     queue (val) {
       this.queueCopy = val.concat()
-      // 在删除最后一个 track 时关闭当前播放列表
+      // 在刪除最後一個 track 時關閉當前播放列表
       if (this.queueCopy.length === 0) {
         this.showCurrentPlayList = false
       } else {
-        // 播放列表发生变化，且更新后不为空的情况下
-        // 更新播放历史
+        // 播放列表發生變化，且更新後不為空的情況下
+        // 更新播放歷史
         this.onUpdatePlayingStatus()
       }
     },
 
     queueIndex() {
-      // 当前播放序号发生变化时更新历史
+      // 當前播放序號發生變化時更新歷史
       this.onUpdatePlayingStatus()
     },
 
     showCurrentPlayList (flag) {
-      // 关闭当前播放列表后，重置 editCurrentPlayList 状态为 false
+      // 關閉當前播放列表後，重置 editCurrentPlayList 狀態為 false
       if (flag === false) {
         this.editCurrentPlayList = false
       }
@@ -458,13 +458,13 @@ export default {
       this.onUpdatePlayingStatus()
     },
 
-    // 监听 前进、后退 进度条时间，
-    // 当 ***SeekMode 变为false，表明进度条跳转已经完成
+    // 監聽 前進、後退 進度條時間，
+    // 當 ***SeekMode 變為false，表明進度條跳轉已經完成
     rewindSeekMode(v) {
       if (!v) {
-        // 当用户前进后退时，currentTime可能并没有立即从audio元素中反馈到vue状态里，
-        // 因此这里需要延迟一小会，等待audio前进后退之后的更新时间抵达vue的currentTime状态，
-        // 然后再去更新播放历史
+        // 當用戶前進後退時，currentTime可能並沒有立即從audio元素中反饋到vue狀態裡，
+        // 因此這裡需要延遲一小會，等待audio前進後退之後的更新時間抵達vue的currentTime狀態，
+        // 然後再去更新播放歷史
         setTimeout(() => {
           this.onUpdatePlayingStatus()
         }, 100) 
@@ -472,9 +472,9 @@ export default {
     },
     forwardSeekMode(v) {
       if (!v) {
-        // 当用户前进后退时，currentTime可能并没有立即从audio元素中反馈到vue状态里，
-        // 因此这里需要延迟一小会，等待audio前进后退之后的更新时间抵达vue的currentTime状态，
-        // 然后再去更新播放历史
+        // 當用戶前進後退時，currentTime可能並沒有立即從audio元素中反饋到vue狀態裡，
+        // 因此這裡需要延遲一小會，等待audio前進後退之後的更新時間抵達vue的currentTime狀態，
+        // 然後再去更新播放歷史
         setTimeout(() => {
           this.onUpdatePlayingStatus()
         }, 100)
@@ -482,7 +482,7 @@ export default {
     },
     currentTime() {
       if (!this.playing) {
-        // 暂停状态下切换时间，也更新播放历史
+        // 暫停狀態下切換時間，也更新播放歷史
         this.onUpdatePlayingStatus()
       }
     },
@@ -503,7 +503,7 @@ export default {
     },
 
     coverUrl () {
-      // 从 LocalStorage 中读取 token
+      // 從 LocalStorage 中讀取 token
       const token = this.$q.localStorage.getItem('jwt-token') || ''
       const hash = this.currentPlayingFile.hash
       return hash ? `/api/cover/${hash.split('/')[0]}?token=${token}` : ""
@@ -548,9 +548,9 @@ export default {
         case "all repeat":
           return "全部"
         case "repeat once":
-          return "单曲循环"
+          return "單曲迴圈"
         case "shuffle":
-          return "随机"
+          return "隨機"
         default:
           return "列表播放"
       }
@@ -587,7 +587,7 @@ export default {
     },
 
     fixDeltaMills() {
-      // 音频先出现的话，需要将offset增加，使得歌词提前出现
+      // 音訊先出現的話，需要將offset增加，使得歌詞提前出現
       let sign = this.fixWhoStartFirst == 'audio' ? +1 : -1;
       return sign * (this.fixStopMills - this.fixStartMills);
     },
@@ -635,7 +635,7 @@ export default {
     },
 
     stopFixLyricSync() {
-      this.fixState = "done"; // 计时结束，重制状态
+      this.fixState = "done"; // 計時結束，重製狀態
       this.fixStopMills = performance.now();
     },
 
@@ -643,7 +643,7 @@ export default {
       this.lyricOffsetChange(this.fixDeltaMills / 1000);
       this.lyricSyncDialog = false;
       this.fixState = "ready";
-      this.$q.notify({message: `歌词偏移量(${this.fixDeltaMills/1000}s)已应用`, timeout: 500})
+      this.$q.notify({message: `歌詞偏移量(${this.fixDeltaMills/1000}s)已應用`, timeout: 500})
     },
 
     ...mapMutations('AudioPlayer', {
@@ -671,7 +671,7 @@ export default {
     ]),
 
     samCoverUrl (hash) {
-      // 从 LocalStorage 中读取 token
+      // 從 LocalStorage 中讀取 token
       const token = this.$q.localStorage.getItem('jwt-token') || ''
       return hash ? `/api/cover/${hash.split('/')[0]}?type=sam&token=${token}` : ""
     },
@@ -732,14 +732,14 @@ export default {
 
     setPIPLyrics() {
       if (!this.enablePIPLyrics) {
-        this.$q.notify({message: "创建桌面歌词组件中，请稍等...", timeout: 500})
+        this.$q.notify({message: "建立桌面歌片語件中，請稍等...", timeout: 500})
       }
       this.setEnablePIPLyrics(!this.enablePIPLyrics)
     },
     
     // return true if two history updated on (onUpdatePlayingStatus) is same
     isSameTwoHistory(ha, hb) {
-      // 如果有任意一个是null，则认为两者不一样
+      // 如果有任意一個是null，則認為兩者不一樣
       if (!(ha && hb)) return false;
       
       if (ha.work_id != hb.work_id) return false;
@@ -753,12 +753,12 @@ export default {
     },
     
     onUpdatePlayingStatus() {
-      // 当前播放列表为空，禁止记录播放历史
+      // 當前播放列表為空，禁止記錄播放歷史
       if (this.queueCopy.length <= 0) return;
 
-      // 尚处于恢复历史记录的阶段，为了避免此时将空状态写入远程服务器覆盖有效状态，跳过本次历史更新
+      // 尚處於恢復歷史記錄的階段，為了避免此時將空狀態寫入遠端伺服器覆蓋有效狀態，跳過本次歷史更新
       if (!this.resumeHistroyDone) {
-        console.log("尚处于恢复历史记录的状态，跳过本次历史更新")
+        console.log("尚處於恢復歷史記錄的狀態，跳過本次歷史更新")
         return
       }
 
@@ -771,15 +771,15 @@ export default {
         }
       }
 
-      // 检查最近一次的历史更新记录，如果两次数据不变，则无需更新记录
+      // 檢查最近一次的歷史更新記錄，如果兩次資料不變，則無需更新記錄
       if (this.isSameTwoHistory(this.latestUpdatedHistory, data)) {
-        console.log("播放状态未变，跳过服务器历史更新")
+        console.log("播放狀態未變，跳過伺服器歷史更新")
         return
       }
 
       this.$axios.put('/api/histroy', data)
         .then((_) => {
-          console.log("更新播放状态成功")
+          console.log("更新播放狀態成功")
           this.latestUpdatedHistory = data;
         })
         .catch((err) => {
@@ -787,19 +787,19 @@ export default {
         })
     },
 
-    // 中转一道这个设置，加一些用户提示
+    // 中轉一道這個設定，加一些使用者提示
     onToggleVideoSource() {
 
-      // 如果是关闭的话，直接关掉，无需用户提示
+      // 如果是關閉的話，直接關掉，無需使用者提示
       if (this.enableVideoSource) {
         this.toggleEnableVideoSource();
         return;
       }
 
-      // 打开的话，需要提示一些用户信息
+      // 開啟的話，需要提示一些使用者資訊
       this.$q.dialog({
         title: '注意',
-        message: '开启视频源绘制功能会增加性能开销，移动设备上可能会发热严重，请谨慎选择。此外，在iOS safari系统中，safari会强制将页面中正在播放的视频元素设置为画中画模式，无法规避，建议iOS safari环境下关闭此项功能',
+        message: '開啟影片源繪製功能會增加效能開銷，移動裝置上可能會發熱嚴重，請謹慎選擇。此外，在iOS safari系統中，safari會強制將頁面中正在播放的影片元素設定為畫中畫模式，無法規避，建議iOS safari環境下關閉此項功能',
         cancel: true,
       }).onOk(() => {
         this.toggleEnableVideoSource()
@@ -809,7 +809,7 @@ export default {
     onSetEnableVideoSourcePIP(enable) {
       this.setEnableVideoSourcePIP(enable)
 
-      const video = document.querySelector("#mediaVideo") // 全局id获取对应的video元素，因为safari进入pip模式需要在用户动作回调中执行，实在是没法跨组件做这个，这里hack一下
+      const video = document.querySelector("#mediaVideo") // 全域性id獲取對應的video元素，因為safari進入pip模式需要在使用者動作回撥中執行，實在是沒法跨元件做這個，這裡hack一下
       const isAlreadyInPIP = document.pictureInPictureElement === video
       if (enable && !isAlreadyInPIP) {
         if (
@@ -836,12 +836,12 @@ export default {
       this.$router.push(`/fullScreenPlayer`)
     },
 
-    // 当发生特定配置改动，需要用户刷新页面时，通过这个通知来提示用户
+    // 當發生特定配置改動，需要使用者重新整理頁面時，通過這個通知來提示使用者
     suggestRefreshPage() {
       this.$q.notify({
-        message: "配置已更改，建议刷新页面",
+        message: "配置已更改，建議重新整理頁面",
         actions: [
-          { label: "立即刷新",
+          { label: "立即重新整理",
             handler: () => {
               // this.$router.push(`/fullScreenPlayer/${this.playWorkId}`)
               // this.$router.push(`/fullScreenPlayer`)
@@ -854,21 +854,21 @@ export default {
 
     lyricOffsetChange(seconds) {
       if (seconds == null) seconds = 0;
-      seconds = Math.round(seconds * 10000) / 10000; // 解决javascript小数点精度问题，比如0.9+0.1变成0.999999这种问题，在这里修复成1.0
+      seconds = Math.round(seconds * 10000) / 10000; // 解決javascript小數點精度問題，比如0.9+0.1變成0.999999這種問題，在這裡修復成1.0
       console.log("lyric offset change to ", seconds, typeof seconds)
       this.setLyricOffsetSeconds(seconds)
     },
 
     flipCover() {
-      if (!this.enableVisualizer) return; // 尚未开启音频可视化选项，无法使用音效均衡器
+      if (!this.enableVisualizer) return; // 尚未開啟音訊視覺化選項，無法使用音效均衡器
       console.warn("flip cover");
       this.isFlipCover = !this.isFlipCover;
     },
 
     onKeyDown(event) {
       // console.warn("key down code = ", event.code, ", activeElement is ", document.activeElement); 
-      if (document.activeElement.tagName === "INPUT") return; // 禁止文本编辑的按键响应
-      if (this.playWorkId === 0) return; // 尚未播放任何作品时，禁止快捷键操作
+      if (document.activeElement.tagName === "INPUT") return; // 禁止文本編輯的按鍵響應
+      if (this.playWorkId === 0) return; // 尚未播放任何作品時，禁止快捷鍵操作
       const volumeStep = 0.04; // volume is between [0.0, 1.0]
 
       switch(event.code) {
@@ -892,7 +892,7 @@ export default {
   },
 
   created() {
-    // 历史更新函数防抖动
+    // 歷史更新函式防抖動
     this.onUpdatePlayingStatus = debounce(this.onUpdatePlayingStatus, 500);
   }
 }
@@ -906,14 +906,14 @@ export default {
 
 .audio-player {
 
-  // 宽度 > $breakpoint-sm-min
+  // 寬度 > $breakpoint-sm-min
   @media (min-width: $breakpoint-sm-min) {
     width: 330px;
     margin: 0px 10px 10px 0px;
     border-radius: 8px;
   }
 
-  // 宽度 < $breakpoint-xs-max (599px)
+  // 寬度 < $breakpoint-xs-max (599px)
   @media (max-width: $breakpoint-xs-max) {
     width: 100%;
     height: 100%;
@@ -923,7 +923,7 @@ export default {
   transition: 0.6s;
   overflow: hidden;
 
-  /* flex布局，让封面占据主要空间，其余空间留给其他控件 */
+  /* flex佈局，讓封面佔據主要空間，其餘空間留給其他控制元件 */
   display: flex;
   flex-direction: column;
 }
@@ -952,24 +952,24 @@ export default {
 
 .albumart {
 
-  // 宽度 < $breakpoint-xs-max (599px)
+  // 寬度 < $breakpoint-xs-max (599px)
   @media (max-width: $breakpoint-xs-max) {
     width: 100%;
   }
 
-  /* 播放控件中，封面占据几乎所有剩余空间，将其他控件挤到底部去 */
+  /* 播放控制元件中，封面佔據幾乎所有剩餘空間，將其他控制元件擠到底部去 */
   flex-grow: 1;
 }
 
 .current-play-list {
   max-height: 500px;
 
-  // 宽度 > $breakpoint-xs-max
+  // 寬度 > $breakpoint-xs-max
   @media (min-width: $breakpoint-xs-max) {
     width: 450px;
   }
 
-  // 宽度 < $breakpoint-xs-max (599px)
+  // 寬度 < $breakpoint-xs-max (599px)
   @media (max-width: $breakpoint-xs-max) {
     min-width: 280px;
   }

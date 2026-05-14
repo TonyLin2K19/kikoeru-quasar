@@ -58,12 +58,12 @@
 
         <div v-if="mode === 'histroy'" class="full-width">
           <div class="full-width">
-            <q-btn color="primary" label="从历史播放"  class="full-width" @click="playHistroy(metadata.id, metadata.state)"/>
+            <q-btn color="primary" label="從歷史播放"  class="full-width" @click="playHistroy(metadata.id, metadata.state)"/>
           </div>
 
           <!--
           <div>
-            <span class="text-accent">历史：</span>
+            <span class="text-accent">歷史：</span>
               <q-badge color="blue">
                 {{ metadata.play_updated_at }}
               </q-badge>
@@ -71,7 +71,7 @@
           -->
 
           <div>
-            <span class="text-accent">进度：</span>
+            <span class="text-accent">進度：</span>
             <q-badge color="purple">{{ metadata.state.index+1 }} / {{ metadata.state.queue.length }}</q-badge>
             <q-badge color="blue">{{ humanReadableSeconds(metadata.state.seconds) }}</q-badge>
             <span class="text-grey">
@@ -93,11 +93,11 @@
             text-color="black"
             class="q-pa-sm"
             :options="[
-              {label: '想听', value: 'marked'},
-              {label: '在听', value: 'listening'},
-              {label: '听过', value: 'listened'},
-              {label: '重听', value: 'replay'},
-              {label: '搁置', value: 'postponed'}
+              {label: '想聽', value: 'marked'},
+              {label: '在聽', value: 'listening'},
+              {label: '聽過', value: 'listened'},
+              {label: '重聽', value: 'replay'},
+              {label: '擱置', value: 'postponed'}
             ]"
           />
           </q-item-label>
@@ -147,19 +147,19 @@ export default {
 
   computed: {
     coverUrl () {
-      // 从 LocalStorage 中读取 token
+      // 從 LocalStorage 中讀取 token
       const token = this.$q.localStorage.getItem('jwt-token') || ''
       return this.workid ? `/api/cover/${this.workid}?type=240x240&token=${token}` : ""
     },
   },
 
   mounted() {
-    // 可以用mounted因为初始化时metadata不为空
+    // 可以用mounted因為初始化時metadata不為空
     this.setMetadata();
   },
 
   watch: {
-    // 需要watch metadata 当父component刷新metadata时更新
+    // 需要watch metadata 當父component重新整理metadata時更新
     metadata () {
       this.setMetadata();
     }
@@ -172,8 +172,8 @@ export default {
       const sec = Math.floor(seconds) % 60
 
       let str = ""
-      if (hour > 0) str += `${hour}小时`
-      if (minute > 0) str += `${minute}分钟`
+      if (hour > 0) str += `${hour}小時`
+      if (minute > 0) str += `${minute}分鐘`
       str += `${sec}秒`
       return str
     },
@@ -202,10 +202,10 @@ export default {
     },
 
     setRating (newRating) {
-      // 取消标星可能是操作失误，所以不响应。应使用删除标记来删除打星
+      // 取消標星可能是操作失誤，所以不響應。應使用刪除標記來刪除打星
       if (newRating) {
         const submitPayload = {
-          'user_name': this.$store.state.User.name, // 用户名不会被后端使用
+          'user_name': this.$store.state.User.name, // 使用者名稱不會被後端使用
           'work_id': this.metadata.id,
           'rating': newRating
         };
@@ -224,7 +224,7 @@ export default {
         .then(()=> this.$emit('reset'))
         .catch((error) => {
           if (error.response) {
-            // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+            // 請求已發出，但伺服器響應的狀態碼不在 2xx 範圍內
             this.showErrNotif(error.response.data.error || `${error.response.status} ${error.response.statusText}`)
           } else {
             this.showErrNotif(error.message || error)
@@ -234,7 +234,7 @@ export default {
 
     setProgress (newProgress) {
       const submitPayload = {
-        'user_name': this.$store.state.User.name, // 用户名不会被后端使用
+        'user_name': this.$store.state.User.name, // 使用者名稱不會被後端使用
         'work_id': this.metadata.id,
         'progress': newProgress
       };
@@ -253,7 +253,7 @@ export default {
         .then(()=> this.$emit('reset'))
         .catch((error) => {
           if (error.response) {
-            // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+            // 請求已發出，但伺服器響應的狀態碼不在 2xx 範圍內
             this.showErrNotif(error.response.data.error || `${error.response.status} ${error.response.statusText}`)
           } else {
             this.showErrNotif(error.message || error)

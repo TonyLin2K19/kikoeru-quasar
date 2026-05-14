@@ -71,7 +71,7 @@ class NUBRCurveSample {
   constructor(samplePoints) {
     this.points = samplePoints;
   }
-  // 多阶贝塞尔曲线计算公式参考：https://www.zhihu.com/question/29565629
+  // 多階貝塞爾曲線計算公式參考：https://www.zhihu.com/question/29565629
   sample(t) {
     // console.log("sample animation progress = ", t);
     let accu = [0, 0];
@@ -87,9 +87,9 @@ class NUBRCurveSample {
 }
 
 class RandomMotionRoutine {
-  // num_sample_point 随机采样点数量
-  // interval_mills 动画周期时间
-  // contain_square 运动正方形区域边长
+  // num_sample_point 隨機取樣點數量
+  // interval_mills 動畫週期時間
+  // contain_square 運動正方形區域邊長
   constructor(num_sample_point, interval_mills, contain_square) {
     this.num_sample_point = num_sample_point;
     this.interval_mills = interval_mills;
@@ -154,10 +154,10 @@ class HaloManager {
     this.inner_radius_list = []; // [r1, r2, r3, ...]
     this.outter_radius_list = []; // [r1, r2, r3, ...]
     this.motion_routine_list = [];
-    this.is_data_dirty = true; // 上述三个属性是否发生变化，如果变化，则需要在update函数中重新计算radial gradient
+    this.is_data_dirty = true; // 上述三個屬性是否發生變化，如果變化，則需要在update函式中重新計算radial gradient
 
     this.radial_gradient_list = []; // [CanvasGradient1, CanvasGradient2, ...] // created on update method
-    this.absolute_center_inner_list = []; // 更新后的canvas上绘制圆形的绝对坐标地址
+    this.absolute_center_inner_list = []; // 更新後的canvas上繪製圓形的絕對座標地址
 
     this.last_canvas_width = 0;
     this.last_canvas_height = 0;
@@ -177,8 +177,8 @@ class HaloManager {
     return [relative_point[0] * this.last_canvas_width, relative_point[1] * this.last_canvas_height];
   }
 
-  // raf当中更新光晕运动
-  // 目前这里不做任何位置更新
+  // raf當中更新光暈運動
+  // 目前這裡不做任何位置更新
   update(mills_time, canvas_ctx) {
     if (this.last_canvas_height != canvas_ctx.canvas.height) {
       this.last_canvas_height = canvas_ctx.canvas.height;
@@ -209,7 +209,7 @@ class HaloManager {
     this.is_data_dirty = false
   }
 
-  // 在canvas当中绘制
+  // 在canvas當中繪製
   draw(canvas_ctx) {
     for (let i = 0; i < this.relative_center_inner_list.length; ++i) {
       const ap = this.absolute_center_inner_list[i];
@@ -260,12 +260,12 @@ function fillFrequencyData(dataArray, canvasCtx, direction, halos) {
   const isCanvasResized =
     fillFrequencyData.gradient[direction].w != canvasWidth
     || fillFrequencyData.gradient[direction].h != canvasHeight;
-  // 渐变对象更新
+  // 漸變物件更新
   if (isCanvasResized) {
     const startX = barCenterX - maxBarWidth * 0.5;
     const endX = startX + maxBarWidth;
     const gradient = canvasCtx.createLinearGradient(
-      // x    y, 只关心水平渐变，不关心垂直方向
+      // x    y, 只關心水平漸變，不關心垂直方向
       startX, 0,
       endX,   0,
     );
@@ -282,7 +282,7 @@ function fillFrequencyData(dataArray, canvasCtx, direction, halos) {
     curve.points[curve.points.length - 1] = [barCenterX, canvasHeight]
   }
 
-  // 绘制矩形
+  // 繪製矩形
   canvasCtx.fillStyle = fillFrequencyData.gradient[direction].grad;
   canvasCtx.lineJoin = "round";
   canvasCtx.lineWidth = 3;
@@ -299,7 +299,7 @@ function fillFrequencyData(dataArray, canvasCtx, direction, halos) {
   //   canvasCtx.fillRect(x, y, w, h);
   // }
 
-  // 绘制波形图
+  // 繪製波形圖
   let lastY = 0;
   let bumpDir = direction == 'left' ? 1 : -1; // or -1, 1 bump to right, -1 means bump to left
   canvasCtx.strokeStyle = fillFrequencyData.gradient[direction].grad;
@@ -312,14 +312,14 @@ function fillFrequencyData(dataArray, canvasCtx, direction, halos) {
     let freq = dataArray[freqIdx];
     const barWidth = Math.floor(maxBarWidth * freq / 255);
 
-    // 绘制并保证和sen
+    // 繪製並保證和sen
     const deltaY = barWidth * (0.5 * barGap) / maxBarWidth;
     const cpx = barCenterX + bumpDir * barWidth;
     const cpy1 = lastY + deltaY;
     const cyp2 = lastY + barGap - deltaY;
     canvasCtx.bezierCurveTo(cpx, cpy1, cpx, cyp2, barCenterX, lastY + barGap);
 
-    // 每一个波柱用两个bezier绘制，效果不是很好
+    // 每一個波柱用兩個bezier繪製，效果不是很好
     // const bumpX = barCenterX + bumpDir * barWidth;
     // const quadY = barGap / 4;
     // canvasCtx.bezierCurveTo(
@@ -339,7 +339,7 @@ function fillFrequencyData(dataArray, canvasCtx, direction, halos) {
   canvasCtx.stroke();
   canvasCtx.shadowBlur = 0;
 }
-// 存储可视化条的渐变对象
+// 儲存視覺化條的漸變物件
 fillFrequencyData.gradient = {
   'left': {
     w: 0,
@@ -397,7 +397,7 @@ export default {
       analyser.minDecibels = -81;
       analyser.maxDecibels = -11;
 
-      // 平滑参数 [0,1]，数字越大实际变化的越平滑
+      // 平滑引數 [0,1]，數字越大實際變化的越平滑
       if (this.$q.platform.is.ios) {
         analyser.smoothingTimeConstant = 0.8; 
       } else if (this.$q.platform.is.android) {
@@ -451,14 +451,14 @@ export default {
       // draw an oscilloscope of the current audio source
       canvasCtx.font="80px Arial";
 
-      this.renderNotifier.stop = true; // 停止前一个渲染循环
-      let newNotifier = {stop: false, pause: !this.playing, drawer: null}; // 创建新的渲染停止器
+      this.renderNotifier.stop = true; // 停止前一個渲染迴圈
+      let newNotifier = {stop: false, pause: !this.playing, drawer: null}; // 建立新的渲染停止器
       const draw = (millsTime) => {
         if (newNotifier.stop) return false;
         requestAnimationFrame(draw);
 
-        // 判断是否要渲染，如果外部暂停，例如音乐暂停 同时 canvas 尺寸没有变化的时候才真正暂停渲染
-        // 注意，暂停渲染pause 仍然会保持raf运行，停止渲染stop 才会停止后续所有渲染
+        // 判斷是否要渲染，如果外部暫停，例如音樂暫停 同時 canvas 尺寸沒有變化的時候才真正暫停渲染
+        // 注意，暫停渲染pause 仍然會保持raf執行，停止渲染stop 才會停止後續所有渲染
         let pauseDraw = newNotifier.pause;
         // sync canvas inner drawing size with client element size
         if (canvasCtx.canvas.width !== canvasCtx.canvas.clientWidth) {
@@ -470,7 +470,7 @@ export default {
           pauseDraw = false;
         }
 
-        // video更新后应该至少绘制一次，避免页面上啥也没有
+        // video更新後應該至少繪製一次，避免頁面上啥也沒有
         if (this.enableDrawVideo) {
           pauseDraw = false;
         }
@@ -479,7 +479,7 @@ export default {
         canvasCtx.fillStyle = "rgba(0, 0, 0, 1)";
         canvasCtx.clearRect(0, 0, canvasCtx.canvas.width, canvasCtx.canvas.height);
 
-        // 绘制音频频率
+        // 繪製音訊頻率
         if (this.enableDrawFrequency) {
           if (!leftDataArray && !rightDataArray) {
             leftDataArray = this.getAnalyserArray(this.setAnalyser(this.audioAnalyser.left));
@@ -491,19 +491,19 @@ export default {
           fillFrequencyData(rightDataArray, canvasCtx, 'right');
         }
 
-        // 绘制光晕
+        // 繪製光暈
         if (this.enableDrawHalo) {
           this.haloManager.update(millsTime, canvasCtx);
           this.haloManager.draw(canvasCtx);
         }
 
-        // 绘制视频
+        // 繪製影片
         if (this.enableDrawVideo && this.video) {
           this.drawVideoInCanvas(canvas, canvasCtx)
         }
       };
       newNotifier.drawer = draw;
-      this.renderNotifier = newNotifier; // 记录这个渲染停止器
+      this.renderNotifier = newNotifier; // 記錄這個渲染停止器
       requestAnimationFrame(newNotifier.drawer);
     },
 
@@ -514,13 +514,13 @@ export default {
 
       let x,y,newVideoWidth, newVideoHeight
       if (containerRatio > videoRatio) {
-        // 横置居中
+        // 橫置居中
         newVideoHeight = canvas.height;
         newVideoWidth = videoRatio * newVideoHeight;
         x = 0.5 * (canvas.width - newVideoWidth)
         y = 0;
       } else {
-        // 竖置居中
+        // 豎置居中
         newVideoWidth = canvas.width;
         newVideoHeight = newVideoWidth / videoRatio;
         x = 0;
@@ -546,7 +546,7 @@ export default {
 
   computed: {
     coverUrl () {
-      // 从 LocalStorage 中读取 token
+      // 從 LocalStorage 中讀取 token
       const token = this.$q.localStorage.getItem('jwt-token') || ''
       return this.visualPlayerCoverUrl
         ? `${this.visualPlayerCoverUrl}?token=${token}`
@@ -605,16 +605,16 @@ export default {
     // console.log("full screen rounter workid = ", this.workid)
     
     if (this.workid === undefined && this.playWorkId !== 0) {
-      // url 没有workid，但是当前正在播放对应的作品
-      // 给当前网页跳转到包含作品id的当前页面上
+      // url 沒有workid，但是當前正在播放對應的作品
+      // 給當前網頁跳轉到包含作品id的當前頁面上
       this.$router.push(`/fullScreenPlayer/${this.playWorkId}`);
     } else if (this.workid !== undefined && this.playWorkId === 0) {
-      // url 有workid，但是当前没有播放对应的作品
-      // 则强制跳转到对应的作品详细页面
+      // url 有workid，但是當前沒有播放對應的作品
+      // 則強制跳轉到對應的作品詳細頁面
       this.$router.push(`/work/${this.workid}`);
     } else if (this.workid === undefined && this.playWorkId === 0) {
       this.$q.notify({
-        message: "当前没有播放任何作品，请先播放一个作品然后打开可视化页面",
+        message: "當前沒有播放任何作品，請先播放一個作品然後開啟視覺化頁面",
         color: "negative",
       });
       this.$router.push(`/works`);

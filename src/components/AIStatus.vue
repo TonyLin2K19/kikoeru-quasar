@@ -46,11 +46,11 @@ export default {
 
     showMsg() {
       switch(this.status) {
-        case AILyricTaskStatus.PENDING: return "排队";
-        case AILyricTaskStatus.TRASCRIPTING: return "翻译";
+        case AILyricTaskStatus.PENDING: return "排隊";
+        case AILyricTaskStatus.TRASCRIPTING: return "翻譯";
         case AILyricTaskStatus.SUCCESS: return "AI";
-        case AILyricTaskStatus.ERROR: return "错误";
-        default: return "无效状态";
+        case AILyricTaskStatus.ERROR: return "錯誤";
+        default: return "無效狀態";
       }
     }
 

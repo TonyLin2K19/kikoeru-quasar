@@ -62,14 +62,14 @@ export default {
       try {
         const response = await this.$axios.get(`/api/work/${this.workid}`);
         this.metadata = response.data
-        // 如果有播放状态记录
-        // 同时当前尚未播放，则设置历史播放进度
+        // 如果有播放狀態記錄
+        // 同時當前尚未播放，則設定歷史播放進度
         if (this.metadata.state && this.playWorkId == 0) {
           this.resumeMetadataPlayHistroy()
         }
       } catch (error ) {
         if (error.response) {
-          // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+          // 請求已發出，但伺服器響應的狀態碼不在 2xx 範圍內
           this.showErrNotif(error.response.data.error || `${error.response.status} ${error.response.statusText}`)
         } else {
           this.showErrNotif(error.message || error)
@@ -83,7 +83,7 @@ export default {
         this.tree = response.data;
       } catch (error) {
         if (error.response) {
-          // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+          // 請求已發出，但伺服器響應的狀態碼不在 2xx 範圍內
           this.showErrNotif(error.response.data.error || `${error.response.status} ${error.response.statusText}`)
         } else {
           this.showErrNotif(error.message || error)
@@ -107,7 +107,7 @@ export default {
       console.log(`resume seconds = ${this.metadata.state.seconds}`)
     },
 
-    // 翻译当前浏览目录的所有音频文件
+    // 翻譯當前瀏覽目錄的所有音訊檔案
     translateCwd() {
       this.$refs.workTree.translateCwd();
     }

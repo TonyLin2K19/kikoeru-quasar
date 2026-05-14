@@ -22,11 +22,11 @@
 
     <div v-if="lyricList.length > 0" class="absolute-top-right transparent" style="padding: 0px;">
       <q-chip v-for="lyric in lyricList" :key="lyric" dense square color="green-7" text-color="white" class="q-ma-sm shadow-3">
-        {{ {ai: "AI歌词", local: "本地歌词"}[lyric] }}
+        {{ {ai: "AI歌詞", local: "本地歌詞"}[lyric] }}
       </q-chip>
     </div>
 
-    <!-- 标签 -->
+    <!-- 標籤 -->
     <div class="q-pa-none q-ma-sm absolute-bottom-left tags-panel">
       <router-link
         v-for="tag in tags"
@@ -39,7 +39,7 @@
       </router-link>
     </div>
 
-    <!--其他自定义组件-->
+    <!--其他自定義元件-->
     <slot name="cover"></slot>
   </q-img>
 </template>
@@ -86,7 +86,7 @@ export default {
 
   computed: {
     coverUrl () {
-      // 从 LocalStorage 中读取 token
+      // 從 LocalStorage 中讀取 token
       const token = this.$q.localStorage.getItem('jwt-token') || ''
       return this.workid ? `/api/cover/${this.workid}?token=${token}` : ""
     },
@@ -98,14 +98,14 @@ export default {
 
     imgClass () {
       if (this.$q.platform.is.mobile) {
-        // 在移动设备上图片直接显示
+        // 在移動裝置上圖片直接顯示
         return ""
       } else {
         if (!this.nsfw) {
-          // 在PC上SFW的图片直接显示
+          // 在PC上SFW的圖片直接顯示
           return ""
         } else {
-          // 在PC上NSFW的图片鼠标悬停显示
+          // 在PC上NSFW的圖片滑鼠懸停顯示
           return this.blurFlag ? "blur-image" : ""
         }
       }

@@ -7,23 +7,23 @@
     <q-separator />
 
     <div v-if="!thumbnailMode">
-      <!-- 标题 -->
+      <!-- 標題 -->
       <div class="q-mx-sm text-h6 text-weight-regular ellipsis-2-lines">
         <router-link :to="`/work/${metadata.id}`" class="text-primary">
           {{ metadata.title }}
         </router-link>
       </div>
 
-      <!-- 社团 -->
+      <!-- 社團 -->
       <div class="q-ml-sm q-mt-sm q-mb-xs text-subtitle1 text-weight-regular ellipsis">
         <router-link :to="`/works?circleId=${metadata.circle.id}`" class="text-grey">
           {{ metadata.circle.name }}
         </router-link>
       </div>
 
-      <!-- 评价&评论 -->
+      <!-- 評價&評論 -->
       <div v-show="metadata.title" class="row items-center">
-        <!-- 评价 -->
+        <!-- 評價 -->
         <div class="col-auto q-ml-sm">
           <q-rating
             v-model="rating"
@@ -34,13 +34,13 @@
             icon-half="star_half"
           />
 
-          <!-- 评价分布明细 -->
+          <!-- 評價分佈明細 -->
           <q-tooltip content-class="text-subtitle1" v-if=metadata.rate_count_detail>
             <div>平均: {{ metadata.rate_average_2dp }}</div>
             <div v-for="(rate, index) in sortedRatings" :key=index class="row items-center">
               <div class="col">{{ rate.review_point }}星</div>
 
-              <!-- 评价占比 -->
+              <!-- 評價佔比 -->
               <q-linear-progress
                 :value="rate.ratio/100"
                 color="amber"
@@ -59,29 +59,29 @@
           <span class="text-grey"> ({{ metadata.rate_count }})</span>
         </div>
 
-        <!-- 评论数量 -->
+        <!-- 評論數量 -->
         <div class="col-auto q-px-sm">
           <q-icon name="chat" size="xs" />
           <span class="text-grey"> ({{ metadata.review_count }})</span>
         </div>
 
-        <!-- DLsite链接 -->
+        <!-- DLsite連結 -->
         <div class="col-auto">
           <q-icon name="launch" size="xs" />
           <a class="text-blue" :href="`https://www.dlsite.com/home/work/=/product_id/RJ${dlsiteCode}.html`" rel="noreferrer noopener" target="_blank">DLsite</a>
         </div>
       </div>
 
-      <!-- 价格&售出数 -->
+      <!-- 價格&售出數 -->
       <div v-show="metadata.title" class="row items-center">
         <span class="q-ml-sm text-weight-medium text-h6 text-red">
           {{ metadata.price }}¥
         </span>
         <q-chip size="sm" icon="sell">{{ metadata.dl_count }}</q-chip>
-        <q-chip v-if="!metadata.nsfw" class="q-mx-sm" dense style="background: #e6f7d6; color: #56842a">全年龄</q-chip>
+        <q-chip v-if="!metadata.nsfw" class="q-mx-sm" dense style="background: #e6f7d6; color: #56842a">全年齡</q-chip>
       </div>
 
-      <!-- 声优 -->
+      <!-- 聲優 -->
       <div
         class="q-mx-xs q-my-sm"
         :class="{ 'horize-scroll-va-list': $q.platform.has.touch }"
@@ -143,8 +143,8 @@ export default {
     dlsiteCode() {
       let c = String(this.metadata.id);
       c = this.metadata.id > 1000000 
-        ? c.padStart(8,'0')  // 8位RJ番号
-        : c.padStart(6,'0'); // 6位RJ番号
+        ? c.padStart(8,'0')  // 8位RJ番號
+        : c.padStart(6,'0'); // 6位RJ番號
       return c;
     }
   },
@@ -159,7 +159,7 @@ export default {
       this.rating = this.metadata.rate_average_2dp || 0;
     }
 
-    // 极个别作品没有标签
+    // 極個別作品沒有標籤
     if (this.metadata.tags && this.metadata.tags[0].name === null) {
       this.showTags = false;
     }
@@ -169,7 +169,7 @@ export default {
     rating (newRating, oldRating) {
       if (oldRating) {
         const submitPayload = {
-          'user_name': this.$store.state.User.name, // 用户名不会被后端使用
+          'user_name': this.$store.state.User.name, // 使用者名稱不會被後端使用
           'work_id': this.metadata.id,
           'rating': newRating
         };
@@ -187,7 +187,7 @@ export default {
         })
         .catch((error) => {
           if (error.response) {
-            // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+            // 請求已發出，但伺服器響應的狀態碼不在 2xx 範圍內
             this.showErrNotif(error.response.data.error || `${error.response.status} ${error.response.statusText}`)
           } else {
             this.showErrNotif(error.message || error)
@@ -212,8 +212,8 @@ export default {
 }
 
 .hover-show {
-  --hover-work-card: 0; /* 桌面平台上，鼠标的hover状态 */
-  --active-work-card: 0; /* 桌面平台上，组建被选中状态 */
+  --hover-work-card: 0; /* 桌面平臺上，滑鼠的hover狀態 */
+  --active-work-card: 0; /* 桌面平臺上，組建被選中狀態 */
 }
 
 .hover-show:hover {

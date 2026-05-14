@@ -3,7 +3,7 @@ import axios from 'axios'
 import { LocalStorage } from 'quasar'
 
 axios.defaults.headers['Content-Type'] = "application/json"
-// 从 LocalStorage 中读取 token
+// 從 LocalStorage 中讀取 token
 axios.defaults.headers['Authorization'] = LocalStorage.getItem('jwt-token') ? 'Bearer ' + LocalStorage.getItem('jwt-token') : ''
 
 export function setAxiosHeaders (token) {

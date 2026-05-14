@@ -14,10 +14,10 @@
       color="primary"
       :class="{}"
     >
-      <!--默认进度条-->
+      <!--預設進度條-->
       <div class="simple-progress" :class="$q.dark.isActive ? 'simple-progress-dark' : 'simple-progress-light'" :style="progressBarStyle"></div>
 
-      <!--拖拽时的进度条-->
+      <!--拖拽時的進度條-->
       <div
         class="new-progress row justify-end"
         :class="{hideNewProgress: !isPanning}"
@@ -91,7 +91,7 @@ export default {
   },
   computed: {
     samCoverUrl () {
-      // 从 LocalStorage 中读取 token
+      // 從 LocalStorage 中讀取 token
       const token = this.$q.localStorage.getItem('jwt-token') || ''
       const hash = this.currentPlayingFile.hash
       return hash ? `/api/cover/${hash.split('/')[0]}?type=sam&token=${token}` : ""
@@ -125,7 +125,7 @@ export default {
     },
      
     showDeltaTimeStyle() {
-      // 当拖拽调整时间太小的时候，将deltaTime的显示位置向右侧偏移，避免显示区域过小看不到
+      // 當拖拽調整時間太小的時候，將deltaTime的顯示位置向右側偏移，避免顯示區域過小看不到
       const moveRightPercentThres = 0.4;
       if (this.newCurrentTime / this.duration < moveRightPercentThres) {
         return {
@@ -139,7 +139,7 @@ export default {
       }
     },
 
-    // 拖动进度条时候的新进度条
+    // 拖動進度條時候的新進度條
     newProgressBarStyle() {
       const percent = Math.max(0, Math.min(100, (this.startCurrentTime + this.deltaTime) / this.duration * 100));
       // const percent = 80;
@@ -209,13 +209,13 @@ export default {
   data() {
     return {
       OpState,
-      state: OpState.idle, // state == OpState.horize 表示进入进度调整模式
-      vertTriggerPixels: 15, // 向上触发像素距离
-      horizeTriggerPixels: 10, // 左右触发像素距离
+      state: OpState.idle, // state == OpState.horize 表示進入進度調整模式
+      vertTriggerPixels: 15, // 向上觸發畫素距離
+      horizeTriggerPixels: 10, // 左右觸發畫素距離
 
       showVolumeIndicator: false,
-      volumeIndicatorWidth: 8, // 音量指示器宽度 pixel
-      volumeDelayMills: 1000, // 音量指示器显示时间
+      volumeIndicatorWidth: 8, // 音量指示器寬度 pixel
+      volumeDelayMills: 1000, // 音量指示器顯示時間
       volumeDelayHideTimeoutId: 0, // timeout id
 
       startClientX: 0,
@@ -225,10 +225,10 @@ export default {
       minDeltaTime: 0,
       deltaTime: 0,
 
-      fence: 0, // startPanning后fence自增1，防止不同startPanning相互之间重叠
-      holdTriggerMills: 500, // 按住500毫秒后也进入进度调整模式
-      onceMoved: false, // 是否移动过，和horizeTriggerPixels的区别在于，这里主要用于处理长按之后没有移动手指时候的情况，避免长按时进度条往后走，但是按住的位置没有变化，这个时候如果松开，则不要修正进度，否则进度可能回跳
-      movedTriggerPixels: 2, // 判断是否移动过的像素阈值
+      fence: 0, // startPanning後fence自增1，防止不同startPanning相互之間重疊
+      holdTriggerMills: 500, // 按住500毫秒後也進入進度調整模式
+      onceMoved: false, // 是否移動過，和horizeTriggerPixels的區別在於，這裡主要用於處理長按之後沒有移動手指時候的情況，避免長按時進度條往後走，但是按住的位置沒有變化，這個時候如果松開，則不要修正進度，否則進度可能回跳
+      movedTriggerPixels: 2, // 判斷是否移動過的畫素閾值
       timeTriggerId: 0,
     };
   },
@@ -278,8 +278,8 @@ export default {
 
       switch(this.state) {
         case OpState.idle: {
-          // 注：y坐标越向下越大
-          if (deltaY <= -this.vertTriggerPixels) { // 优先判断
+          // 注：y座標越向下越大
+          if (deltaY <= -this.vertTriggerPixels) { // 優先判斷
             this.state = OpState.up;
             this.showAudioPlayer();
             break;
@@ -289,7 +289,7 @@ export default {
             this.state = OpState.horize;
             this.onceMoved = true;
 
-            // // 更新start坐标，来弥补前面的这段空白位置区间
+            // // 更新start座標，來彌補前面的這段空白位置區間
             this.startClientX = x;
             this.startClientY = y;
 
@@ -310,10 +310,10 @@ export default {
 
     panningEnd() {
       if (this.state == OpState.idle) {
-        // 触摸结束时，如果并没有被识别成任何方向的扫描，则认为是点击操作，打开audioPlayer
+        // 觸控結束時，如果並沒有被識別成任何方向的掃描，則認為是點選操作，開啟audioPlayer
         this.showAudioPlayer();
       } else if (this.state == OpState.horize && this.onceMoved) {
-        // this.onceMoved 用来处理长按后，进入horize调整状态，但是触摸位置并没有改变的情况，这个时候松开不应该调整进度，尤其是音频正在播放的时候
+        // this.onceMoved 用來處理長按後，進入horize調整狀態，但是觸控位置並沒有改變的情況，這個時候鬆開不應該調整進度，尤其是音訊正在播放的時候
         this.setNewCurrentTime(this.newCurrentTime);
       }
       // this.deltaTime = 0;
@@ -429,7 +429,7 @@ export default {
   color: inherit;
 }
 
-// 左右拖拽playBar的时候，将控件顶部突出一些部分展示更多进度条，方便观察拖拽的进度
+// 左右拖拽playBar的時候，將控制元件頂部突出一些部分展示更多進度條，方便觀察拖拽的進度
 .playBarBumpUp {
 
   @media (min-width: $breakpoint-sm-min) {
@@ -437,7 +437,7 @@ export default {
     max-width: 520px !important;
   }
 
-  // 宽度 < $breakpoint-xs-max (599px)
+  // 寬度 < $breakpoint-xs-max (599px)
   @media (max-width: $breakpoint-xs-max) {
     padding: 4rem 2vw 0 2vw;
     width: 84vw !important;
@@ -447,13 +447,13 @@ export default {
 .hideStyle {
   transform: translateX(-50%) translateY(200%);
 
-  // 不同尺寸下，AudioPlayer位于全屏、或者右下角，
-  // 参考其位置，调整底部playerBar隐藏时去往的地方，使动画更连贯
-  // 宽度 > $breakpoint-sm-min
+  // 不同尺寸下，AudioPlayer位於全屏、或者右下角，
+  // 參考其位置，調整底部playerBar隱藏時去往的地方，使動畫更連貫
+  // 寬度 > $breakpoint-sm-min
   @media (min-width: $breakpoint-sm-min) {
     margin-left: 100%;
   }
-  // 宽度 < $breakpoint-xs-max (599px)
+  // 寬度 < $breakpoint-xs-max (599px)
   @media (max-width: $breakpoint-xs-max) {
     width: 80vw;
   }

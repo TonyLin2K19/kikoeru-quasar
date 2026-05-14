@@ -3,7 +3,7 @@
     <q-header elevated class="bg-black">
       <q-toolbar>
         <q-btn flat @click="drawer = !drawer" round dense icon="menu" />
-        <q-toolbar-title>仪表盘</q-toolbar-title>
+        <q-toolbar-title>儀表盤</q-toolbar-title>
       </q-toolbar>
     </q-header>
 
@@ -65,28 +65,28 @@ export default {
       miniState: true,
       links: [
         {
-          title: '音声库',
+          title: '音聲庫',
           icon: 'folder',
           path: '/admin'
         },
         {
-          title: '扫描',
+          title: '掃描',
           icon: 'youtube_searched_for',
           path: '/admin/scanner'
         },
         {
-          title: '用户管理',
+          title: '使用者管理',
           icon: 'person',
           path: '/admin/usermanage'
         },
         {
-          title: '高级设置',
+          title: '高階設定',
           icon: 'settings',
           path: '/admin/advanced'
         },
         
         {
-          title: '回到主页',
+          title: '回到主頁',
           icon: 'home',
           path: '/'
         }
@@ -105,13 +105,13 @@ export default {
     error (err) {
       this.showWarnNotif(err.message || err)
       this.$socket.close()
-      // 验证失败，跳转到登录页面
+      // 驗證失敗，跳轉到登入頁面
       this.$router.push('/login')
     }
   },
 
   created () {
-    // 从 LocalStorage 中读取 token
+    // 從 LocalStorage 中讀取 token
     const token = this.$q.localStorage.getItem('jwt-token') || ''
     this.$socket.io.opts.query.auth_token = token
     

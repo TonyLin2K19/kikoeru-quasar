@@ -65,7 +65,7 @@ const routes = [
       },
       {
         path: 'search',
-        name: 'advance search', // 必要，Works页面根据这个name判断是否开启高级搜索功能
+        name: 'advance search', // 必要，Works頁面根據這個name判斷是否開啟高階搜尋功能
         component: Works,
       },
       {

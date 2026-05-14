@@ -6,7 +6,7 @@
       v-model="isFlipLeftRightChannel"
       color="primary"
       :icon="isFlipLeftRightChannel ? 'sync_alt' : 'headphones'"
-      label="左右声道交换"
+      label="左右聲道交換"
     />
   </div>
 </template>

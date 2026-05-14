@@ -3,22 +3,22 @@
     <q-card class="q-ma-md">
       <q-form @submit="updateAdminPassword()">
         <q-toolbar>
-          <q-toolbar-title>修改管理员密码</q-toolbar-title>
+          <q-toolbar-title>修改管理員密碼</q-toolbar-title>
         </q-toolbar>
 
         <div class="q-pa-sm">
-          <q-input outlined dense type="password" label="新密码"
+          <q-input outlined dense type="password" label="新密碼"
             v-model="adminNewPassword"
             lazy-rules
-            :rules="[ val => val.length >= 5 || '密码长度至少为 5' ]"
+            :rules="[ val => val.length >= 5 || '密碼長度至少為 5' ]"
           />
 
-          <q-input outlined dense type="password" label="确认密码"
+          <q-input outlined dense type="password" label="確認密碼"
             v-model="adminConfirmPassword"
             lazy-rules
             :rules="[
-              val => val.length >= 5 || '密码长度至少为 5',
-              val => val === adminNewPassword || '两次密码输入不一致'
+              val => val.length >= 5 || '密碼長度至少為 5',
+              val => val === adminNewPassword || '兩次密碼輸入不一致'
             ]"
           />
 
@@ -32,30 +32,30 @@
     <q-card class="q-ma-md">
       <q-form @submit="addNewUser()">
         <q-toolbar>
-          <q-toolbar-title>添加新用户</q-toolbar-title>
+          <q-toolbar-title>新增新使用者</q-toolbar-title>
         </q-toolbar>
 
         <div class="q-pa-sm">
-          <q-select dense outlined label="用户组" v-model="newuser.group" :options="groups" class="q-mb-md" />
+          <q-select dense outlined label="使用者組" v-model="newuser.group" :options="groups" class="q-mb-md" />
 
           <q-input outlined dense
-            v-model="newuser.name" label="用户名"
+            v-model="newuser.name" label="使用者名稱"
             required
             lazy-rules
             :rules="[
-                val => val.length >= 5 || '用户名长度至少为 5',
-                val => !users.find(user => user.name === val) || '该名称已存在，用户名不能重复',
+                val => val.length >= 5 || '使用者名稱長度至少為 5',
+                val => !users.find(user => user.name === val) || '該名稱已存在，使用者名稱不能重複',
               ]" 
           />
 
-          <q-input outlined dense label="密码"
+          <q-input outlined dense label="密碼"
             v-model="newuser.password"
             lazy-rules
-            :rules="[ val => val.length >= 5 || '密码长度至少为 5' ]"
+            :rules="[ val => val.length >= 5 || '密碼長度至少為 5' ]"
           />
 
           <div class="row justify-end">
-            <q-btn :loading="loadingAddNewUser" type="submit" color="primary" label="添加" />
+            <q-btn :loading="loadingAddNewUser" type="submit" color="primary" label="新增" />
           </div>
         </div>
       </q-form>
@@ -63,7 +63,7 @@
 
     <q-card class="q-ma-md q-pa-sm">
       <q-table
-        title="所有用户"
+        title="所有使用者"
         :data="users"
         :columns="columns"
         row-key="name"
@@ -72,19 +72,19 @@
         :selected.sync="selected"
       />
       <div class="row justify-end">
-        <q-btn :loading="loadingDeleteUsers" :disable="selected.length === 0" @click="confirm = true" color="primary" label="删除" />
+        <q-btn :loading="loadingDeleteUsers" :disable="selected.length === 0" @click="confirm = true" color="primary" label="刪除" />
       </div>
     </q-card>
 
     <q-dialog v-model="confirm" persistent>
       <q-card>
         <q-card-section class="row items-center">
-          <span class="q-ma-sm text-h6">确认删除选中用户？</span>
+          <span class="q-ma-sm text-h6">確認刪除選中使用者？</span>
         </q-card-section>
 
         <q-card-actions align="right">
           <q-btn flat label="取消" color="primary" v-close-popup />
-          <q-btn flat label="确认" color="primary" @click="deleteUsers()" v-close-popup />
+          <q-btn flat label="確認" color="primary" @click="deleteUsers()" v-close-popup />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -101,8 +101,8 @@ export default {
     return {
       selected: [],
       columns: [
-        { name: 'desc', required: true, label: '用户名', align: 'left', field: 'name', sortable: true },
-        { name: 'calories', required: true, label: '用户组', align: 'center', field: 'group', sortable: true },
+        { name: 'desc', required: true, label: '使用者名稱', align: 'left', field: 'name', sortable: true },
+        { name: 'calories', required: true, label: '使用者組', align: 'center', field: 'group', sortable: true },
       ],
       users: [],
       loadingDeleteUsers: false,
@@ -144,7 +144,7 @@ export default {
         })
         .catch((error) => {
           this.loadingAddNewUser = false
-          // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+          // 請求已發出，但伺服器響應的狀態碼不在 2xx 範圍內
           if (error.response.status === 422) {
             this.showErrNotif(error.response.data.errors[0].msg)
           } else if (error.response.status === 403) {
@@ -173,7 +173,7 @@ export default {
         .catch((error) => {
           this.loadingDeleteUsers = false
           if (error.response) {
-            // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+            // 請求已發出，但伺服器響應的狀態碼不在 2xx 範圍內
             if (error.response.status === 403) {
               this.showWarnNotif(error.response.data.error)
             } else {
@@ -194,14 +194,14 @@ export default {
         .then((response) => {
           this.loadingUpdateAdminPassword = false
           try {
-            // 删除旧 token
+            // 刪除舊 token
             this.$q.localStorage.set('jwt-token', '')
           } catch (err) {
             this.showErrNotif(err.message)
           }
           this.showSuccNotif(response.data.message)
 
-          // 仅当启用鉴权时跳转到登录页面
+          // 僅當啟用鑑權時跳轉到登入頁面
           if (this.$store.state.User.auth) {
             console.log('Got here')
             this.$router.push('/login')
@@ -210,7 +210,7 @@ export default {
         .catch((error) => {
           this.loadingUpdateAdminPassword = false
           if (error.response) {
-            // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+            // 請求已發出，但伺服器響應的狀態碼不在 2xx 範圍內
             this.showErrNotif(error.response.data.error || `${error.response.status} ${error.response.statusText}`)
           } else {
             this.showErrNotif(error.message || error)
@@ -225,7 +225,7 @@ export default {
         })
         .catch((error) => {
           if (error.response) {
-            // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+            // 請求已發出，但伺服器響應的狀態碼不在 2xx 範圍內
             if (error.response.status !== 401) {
               this.showErrNotif(error.response.data.error || `${error.response.status} ${error.response.statusText}`)
             }

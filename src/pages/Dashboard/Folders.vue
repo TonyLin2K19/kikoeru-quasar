@@ -3,7 +3,7 @@
     <q-card class="q-ma-md">
       <q-form @submit="onSubmitRootFolder">
         <q-toolbar>
-          <q-toolbar-title>添加新文件夹</q-toolbar-title>
+          <q-toolbar-title>新增新資料夾</q-toolbar-title>
         </q-toolbar>
 
         <div class="q-pa-sm">
@@ -13,8 +13,8 @@
             v-model="rootFolder.name"
             required
             lazy-rules
-            :rules="[val => !config.rootFolders.find(rootFolder => rootFolder.name === val) || '该别名已存在，文件夹别名不能重复']"
-            label="文件夹别名"
+            :rules="[val => !config.rootFolders.find(rootFolder => rootFolder.name === val) || '該別名已存在，資料夾別名不能重複']"
+            label="資料夾別名"
           />
 
           <q-input
@@ -23,12 +23,12 @@
             v-model="rootFolder.path"
             required
             lazy-rules
-            :rules="[val => !config.rootFolders.find(rootFolder => rootFolder.path === val) || '该路径已存在，文件夹路径不能重复']"
-            label="绝对路径"
+            :rules="[val => !config.rootFolders.find(rootFolder => rootFolder.path === val) || '該路徑已存在，資料夾路徑不能重複']"
+            label="絕對路徑"
           />
 
           <div class="row justify-end">
-            <q-btn type="submit" color="primary" label="添加" />
+            <q-btn type="submit" color="primary" label="新增" />
           </div>
         </div>
       </q-form>
@@ -37,7 +37,7 @@
     <q-form @submit="onSubmit">
       <q-card class="q-ma-md" v-show="config.rootFolders.length">
         <q-toolbar>
-          <q-toolbar-title>文件夹列表</q-toolbar-title>
+          <q-toolbar-title>資料夾列表</q-toolbar-title>
         </q-toolbar>
 
         <q-list>
@@ -60,15 +60,15 @@
 
       <q-card class="q-ma-md">
         <q-toolbar>
-          <q-toolbar-title>封面文件夹路径</q-toolbar-title>
+          <q-toolbar-title>封面資料夾路徑</q-toolbar-title>
         </q-toolbar>
 
-        <div v-if="config.coverUseDefaultPath" class="q-pa-md">已指定为默认路径，即程序所在位置下的covers文件夹。如需修改，请前往高级设置并取消“封面使用默认路径”。</div>
+        <div v-if="config.coverUseDefaultPath" class="q-pa-md">已指定為預設路徑，即程式所在位置下的covers資料夾。如需修改，請前往高階設定並取消“封面使用預設路徑”。</div>
         <q-input v-else outlined dense required v-model="config.coverFolderDir" class="q-pa-sm" />
       </q-card>
 
       <div class="q-ma-lg row justify-end">
-        <q-btn :loading="loading" label="保存" type="submit" color="primary" />
+        <q-btn :loading="loading" label="儲存" type="submit" color="primary" />
       </div>
     </q-form>
   </div>
@@ -104,7 +104,7 @@ export default {
         })
         .catch((error) => {
           if (error.response) {
-            // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+            // 請求已發出，但伺服器響應的狀態碼不在 2xx 範圍內
             if (error.response.status !== 401) {
               this.showErrNotif(error.response.data.error || `${error.response.status} ${error.response.statusText}`)
             }
@@ -126,7 +126,7 @@ export default {
         .catch((error) => {
           this.loading = false
           if (error.response) {
-            // 请求已发出，但服务器响应的状态码不在 2xx 范围内
+            // 請求已發出，但伺服器響應的狀態碼不在 2xx 範圍內
             this.showErrNotif(error.response.data.error || `${error.response.status} ${error.response.statusText}`)
           } else {
             this.showErrNotif(error.message || error)
